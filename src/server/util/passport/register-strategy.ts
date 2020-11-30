@@ -13,7 +13,7 @@ const registerStrategy = new LocalStrategy(
 
 		const existing = await User.findOne({ email });
 		if (existing) {
-			return done(null, false, { message: 'User with email already exists' });
+			return done(null, false, { message: 'Email is already registered' });
 		}
 
 		// TODO- ADD EMAIL VALIDATION
@@ -24,12 +24,24 @@ const registerStrategy = new LocalStrategy(
 			});
 		}
 
+		// Generate unique code
+		let code;
+		do {
+			code = new Array(6)
+				.fill(0)
+				.map(() => Math.floor(Math.random() * 10))
+				.join('');
+		} while (await User.findOne({ code }));
+
+		// Create user document
 		const user = new User({
 			email,
 			username,
 			password,
+			code,
 		});
 
+		// Encrypt password and save
 		await user.encryptPassword();
 		await user.save();
 
