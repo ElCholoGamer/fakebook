@@ -35,8 +35,13 @@ const App: React.FC = () => {
 			<Header user={user} />
 			<Switch>
 				<Route exact path="/" component={Home} />
-				<Route exact path="/login" component={Login} />
-				<Route exact path="/register" component={Register} />
+
+				{!user && (
+					<>
+						<Route exact path="/login" component={Login} />
+						<Route exact path="/register" component={Register} />
+					</>
+				)}
 
 				<Redirect to="/" />
 			</Switch>
