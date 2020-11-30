@@ -49,6 +49,7 @@
 		"@types/mini-css-extract-plugin": "^1.2.1",
 		"@types/mongoose": "^5.10.1",
 		"@types/morgan": "^1.9.2",
+		"@types/nodemailer": "^6.4.0",
 		"@types/passport-local": "^1.0.33",
 		"@types/react-dom": "^17.0.0",
 		"@types/react-router-dom": "^5.1.6",
