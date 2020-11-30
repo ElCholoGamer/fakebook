@@ -1,7 +1,6 @@
 import express from 'express';
 import checkAuth from '../middleware/check-auth';
 import validator from '../middleware/validator';
-import User from '../models/user';
 import asyncHandler from '../util/async-handler';
 
 const router = express.Router();
@@ -19,22 +18,10 @@ router.put(
 		bio: { type: 'string', required: false },
 	}),
 	asyncHandler(async (req, res) => {
-		let { username, bio } = req.body;
-		username = username.trim();
+		const { bio = req.user!.bio, username = req.user!.username } = req.body;
 
-		// If username is different, check if it's unique
-		if (username !== req.user!.username) {
-			const existing = await User.findOne({ username });
-			if (existing) {
-				return res.status(400).json({
-					status: 400,
-					message: 'Username already exists',
-				});
-			}
-		}
-
-		req.user!.username = username || req.user!.username;
-		req.user!.bio = bio || req.user!.bio;
+		req.user!.username = username;
+		req.user!.bio = bio;
 		await req.user!.save();
 
 		res.json({
@@ -49,14 +36,20 @@ router.get(
 	asyncHandler(async (req, res) => {
 		const { code = '' } = req.query;
 		if (code !== req.user!.code) {
-			return res.redirect('/');
+			return res.status(401).json({
+				status: 401,
+				message: 'Invalid code',
+			});
 		}
 
 		req.user!.verified = true;
 		delete req.user!.code;
 		await req.user!.save();
 
-		res.redirect('/');
+		res.json({
+			status: 200,
+			message: 'User verified successfully',
+		});
 	})
 );
 

@@ -24,14 +24,11 @@ const registerStrategy = new LocalStrategy(
 			});
 		}
 
-		// Generate unique code
-		let code;
-		do {
-			code = new Array(6)
-				.fill(0)
-				.map(() => Math.floor(Math.random() * 10))
-				.join('');
-		} while (await User.findOne({ code }));
+		// Generate code
+		const code = new Array(6)
+			.fill(0)
+			.map(() => Math.floor(Math.random() * 10))
+			.join('');
 
 		// Create user document
 		const user = new User({

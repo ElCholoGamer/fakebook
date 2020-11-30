@@ -21,7 +21,7 @@ initPassport();
 // Options
 app.enabled('trust proxy');
 app.set('json replacer', (key: string, val: any) =>
-	key === 'password' ? undefined : val
+	['password', 'code'].includes(key) ? undefined : val
 );
 
 // Middleware
