@@ -8,6 +8,8 @@ const Header = React.lazy(() => import('./components/Header'));
 const Home = React.lazy(() => import('./pages/Home'));
 const Login = React.lazy(() => import('./pages/Login'));
 const Register = React.lazy(() => import('./pages/Register'));
+const Posts = React.lazy(() => import('./pages/Posts'));
+const Account = React.lazy(() => import('./pages/Account'));
 
 const App: React.FC = () => {
 	const [user, setUser] = React.useState<User | null>(null);
@@ -37,6 +39,8 @@ const App: React.FC = () => {
 				<Route exact path="/" component={Home} />
 				<Route exact path="/login" component={Login} />
 				<Route exact path="/register" component={Register} />
+				<Route exact path="/posts" component={Posts} />
+				<Route exact path="/account" children={<Account user={user} />} />
 
 				<Redirect to="/" />
 			</Switch>
