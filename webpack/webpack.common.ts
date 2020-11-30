@@ -11,8 +11,8 @@ const config: webpack.Configuration = {
 	context,
 	entry: join(context, 'src/app/index.tsx'),
 	output: {
-		filename: 'js/[name].[contenthash].js',
-		chunkFilename: '[name].[contenthash].chunk.js',
+		filename: 'js/[name].[contenthash:8].js',
+		chunkFilename: 'js/[name].[contenthash:8].chunk.js',
 		path: join(context, 'build'),
 		publicPath: '/',
 	},
@@ -59,7 +59,7 @@ const config: webpack.Configuration = {
 	plugins: [
 		new HtmlWebpackPlugin({ template: join(context, 'public/index.html') }),
 		new CopyWebpackPlugin({ patterns: [{ from: 'public/' }] }),
-		new MiniCssExtractPlugin({ filename: 'css/[name].css' }),
+		new MiniCssExtractPlugin({ filename: 'css/[name].[contenthash:8].css' }),
 		new CleanWebpackPlugin(),
 	],
 };
