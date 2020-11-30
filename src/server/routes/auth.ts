@@ -1,6 +1,7 @@
 import express from 'express';
 import passport from 'passport';
 import { IVerifyOptions } from 'passport-local';
+import validator from '../middleware/validator';
 import { IUser } from '../models/user';
 
 const router = express.Router();
@@ -36,8 +37,16 @@ router.post('/login', (req, res) => {
 	passport.authenticate('local-login', authCallback(req, res))(req, res);
 });
 
-router.post('/register', (req, res) => {
-	passport.authenticate('local-register', authCallback(req, res))(req, res);
-});
+router.post(
+	'/register',
+	validator({
+		username: { type: 'string', minLength: 1 },
+		password: { type: 'string', minLength: 1 },
+		email: { type: 'string' },
+	}),
+	(req, res) => {
+		passport.authenticate('local-register', authCallback(req, res))(req, res);
+	}
+);
 
 export default router;

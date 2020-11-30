@@ -3,16 +3,20 @@ import User from '../../models/user';
 
 const registerStrategy = new LocalStrategy(
 	{
-		usernameField: 'username',
+		usernameField: 'email',
 		passwordField: 'password',
+		passReqToCallback: true,
 	},
-	async (username, password, done) => {
-		username = username.trim();
+	async (req, email, password, done) => {
+		const username = req.body.username.trim();
+		email = email.trim();
 
-		const existing = await User.findOne({ username });
+		const existing = await User.findOne({ email });
 		if (existing) {
-			return done(null, false, { message: 'Username already exists' });
+			return done(null, false, { message: 'User with email already exists' });
 		}
+
+		// TODO- ADD EMAIL VALIDATION
 
 		if (password.length < 4) {
 			return done(null, false, {
@@ -21,6 +25,7 @@ const registerStrategy = new LocalStrategy(
 		}
 
 		const user = new User({
+			email,
 			username,
 			password,
 		});
