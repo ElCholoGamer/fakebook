@@ -22,7 +22,7 @@ const sendCode = (to: string, code: string) =>
 		const options: Mail.Options = {
 			from: MAILER_EMAIL,
 			to,
-			subject: 'Your Coolness100 code',
+			subject: 'Your Fakebook code',
 			html: mail.replace(/%CODE%/g, code),
 		};
 

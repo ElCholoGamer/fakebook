@@ -20,7 +20,7 @@ const Header: React.FC<Props> = ({ user }) => {
 
 	return (
 		<Navbar bg="dark" variant="dark" expand="sm">
-			<Navbar.Brand href="/">Coolness100</Navbar.Brand>
+			<Navbar.Brand href="/">Fakebook</Navbar.Brand>
 			<Navbar.Toggle />
 
 			<Navbar.Collapse className="justify-content-end">
