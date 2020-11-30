@@ -24,7 +24,8 @@
 		"semi": ["error", "always"],
 		"prefer-template": "error",
 		"no-useless-concat": "error",
-		"no-mixed-spaces-and-tabs": "off"
+		"no-mixed-spaces-and-tabs": "off",
+		"react/no-children-prop": "off"
 	},
 	"settings": {
 		"react": {
