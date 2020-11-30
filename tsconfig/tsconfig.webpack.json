@@ -1,0 +1,19 @@
+{
+	"compilerOptions": {
+		"target": "ES5",
+		"module": "ESNext",
+		"allowJs": true,
+		"removeComments": true,
+		"jsx": "react",
+		"esModuleInterop": true,
+		"allowSyntheticDefaultImports": true,
+		"noImplicitAny": false,
+		"strict": true,
+		"resolveJsonModule": true,
+		"strictNullChecks": true,
+		"sourceMap": true,
+		"skipLibCheck": true,
+		"moduleResolution": "node"
+	},
+	"include": ["../src/app/**/*"]
+}
