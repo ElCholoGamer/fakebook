@@ -16,6 +16,7 @@
 		"serve:dev": "ts-node-dev --transpile-only --respawn --rs --cls ./src/server/index.ts"
 	},
 	"dependencies": {
+		"axios": "^0.21.0",
 		"bcrypt": "^5.0.0",
 		"bootstrap": "^4.5.3",
 		"connect-mongo": "^3.2.0",
