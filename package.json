@@ -10,7 +10,7 @@
 	"scripts": {
 		"start": "webpack serve --config ./webpack/webpack.dev.ts",
 		"build:app": "webpack --config ./webpack/webpack.prod.ts",
-		"build:server": "tsc -p ./tsconfig/tsconfig.server.json --dev",
+		"build:server": "tsc -p ./tsconfig/tsconfig.server.json",
 		"build": "yarn build:app && yarn build:server",
 		"serve": "node ./dist/index.js",
 		"serve:dev": "ts-node-dev --transpile-only --respawn --rs --cls ./src/server/index.ts"

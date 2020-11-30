@@ -48,7 +48,7 @@ app.use('/auth', authRouter);
 app.use('/user', userRouter);
 
 // Static files and React app
-if (!process.argv.includes('--dev')) {
+if (!process.env.TS_NODE_DEV) {
 	const BUILD = resolve(__dirname, '../build');
 	app.use(express.static(BUILD));
 
