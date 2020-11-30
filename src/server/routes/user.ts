@@ -61,6 +61,10 @@ router.post(
 	})
 );
 
+router.get('/avatar', (req, res) => {
+	res.redirect(`/avatar?id=${req.user!._id}`);
+});
+
 // Log out user session
 router.post('/logout', (req, res) => {
 	req.logout();

@@ -1,16 +1,38 @@
 import { RequestHandler } from 'express';
 
-const asyncHandler = (handler: RequestHandler): RequestHandler => async (
-	req,
-	res,
-	next
-) => {
-	try {
-		await handler(req, res, next);
-	} catch (err) {
-		console.error(err);
-		next(err);
-	}
-};
+interface Options {
+	doNext?: boolean;
+	silent?: boolean;
+	failStatus?: number;
+	failMessage?: string;
+}
+
+function asyncHandler(
+	handler: RequestHandler,
+	options: Options = {}
+): RequestHandler {
+	const {
+		doNext = true,
+		silent = false,
+		failMessage = 'An error occurred!',
+		failStatus = 500,
+	} = options;
+
+	return async (req, res, next) => {
+		try {
+			await handler(req, res, next);
+		} catch (err) {
+			if (!doNext) {
+				if (!silent) console.error(err);
+				res.status(failStatus).json({
+					status: failStatus,
+					message: failMessage,
+				});
+			} else {
+				next(err);
+			}
+		}
+	};
+}
 
 export default asyncHandler;

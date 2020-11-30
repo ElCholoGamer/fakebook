@@ -7,6 +7,7 @@ import mongoose from 'mongoose';
 import morgan from 'morgan';
 import passport from 'passport';
 import { join, resolve } from 'path';
+import indexRouter from './routes';
 import authRouter from './routes/auth';
 import userRouter from './routes/user';
 import initPassport from './util/passport';
@@ -44,6 +45,7 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 // Routes
+app.use('/', indexRouter);
 app.use('/auth', authRouter);
 app.use('/user', userRouter);
 
