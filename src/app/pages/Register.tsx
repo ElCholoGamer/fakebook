@@ -3,9 +3,11 @@ import React from 'react';
 import Alert from 'react-bootstrap/Alert';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
+import { useHistory } from 'react-router-dom';
 import FormRow from '../components/FormRow';
 
 const Register: React.FC = () => {
+	const history = useHistory();
 	const [message, setMessage] = React.useState('');
 	const [data, setData] = React.useState({
 		email: '',
@@ -13,6 +15,8 @@ const Register: React.FC = () => {
 		password1: '',
 		password2: '',
 	});
+
+	if (localStorage.getItem('loggedIn') === 'yes') history.push('/');
 
 	const handleClick = ({
 		currentTarget,
