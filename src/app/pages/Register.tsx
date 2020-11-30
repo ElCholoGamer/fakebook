@@ -1,6 +1,8 @@
 import axios, { AxiosError } from 'axios';
 import React from 'react';
-import { Button, Form } from 'react-bootstrap';
+import Alert from 'react-bootstrap/Alert';
+import Button from 'react-bootstrap/Button';
+import Form from 'react-bootstrap/Form';
 import FormRow from '../components/FormRow';
 
 const Register: React.FC = () => {
@@ -31,8 +33,8 @@ const Register: React.FC = () => {
 			.catch((err: AxiosError) => {
 				console.error(err);
 				setMessage(err.response?.data?.message);
-			})
-			.finally(() => (currentTarget.disabled = false));
+				currentTarget.disabled = false;
+			});
 	};
 
 	return (
@@ -82,7 +84,11 @@ const Register: React.FC = () => {
 					Register
 				</Button>
 			</Form>
-			<p className="text-danger mt-3">{message}</p>
+			{message && (
+				<Alert variant="danger" className="mt-3">
+					{message}
+				</Alert>
+			)}
 		</div>
 	);
 };

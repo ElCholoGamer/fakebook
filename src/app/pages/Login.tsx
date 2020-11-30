@@ -1,5 +1,6 @@
 import axios, { AxiosError } from 'axios';
 import React from 'react';
+import Alert from 'react-bootstrap/Alert';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import FormRow from '../components/FormRow';
@@ -7,10 +8,6 @@ import FormRow from '../components/FormRow';
 const Login: React.FC = () => {
 	const [message, setMessage] = React.useState('');
 	const [data, setData] = React.useState({ email: '', password: '' });
-
-	const handleChange = ({ target }: React.ChangeEvent<HTMLInputElement>) => {
-		setData(prev => ({ ...prev, [target.name]: target.value }));
-	};
 
 	const handleClick = ({
 		currentTarget,
@@ -25,8 +22,8 @@ const Login: React.FC = () => {
 			.catch((err: AxiosError) => {
 				console.error(err);
 				setMessage(err.response?.data?.message);
-			})
-			.finally(() => (currentTarget.disabled = false));
+				currentTarget.disabled = false;
+			});
 	};
 
 	const { email, password } = data;
@@ -58,7 +55,11 @@ const Login: React.FC = () => {
 					Log In
 				</Button>
 			</Form>
-			<p className="text-danger mt-3">{message}</p>
+			{message && (
+				<Alert variant="danger" className="mt-3">
+					{message}
+				</Alert>
+			)}
 		</div>
 	);
 };

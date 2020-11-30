@@ -1,10 +1,10 @@
 import axios from 'axios';
 import React from 'react';
 import { Redirect, Route, Switch } from 'react-router-dom';
-import Header from './components/Header';
 import Loading from './components/Loading';
 import { User } from './utils';
 
+const Header = React.lazy(() => import('./components/Header'));
 const Home = React.lazy(() => import('./pages/Home'));
 const Login = React.lazy(() => import('./pages/Login'));
 const Register = React.lazy(() => import('./pages/Register'));
