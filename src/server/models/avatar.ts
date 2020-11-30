@@ -1,6 +1,6 @@
 import { Document, model, Schema } from 'mongoose';
 
-interface IAvatar extends Document {
+export interface IAvatar extends Document {
 	data: Buffer;
 	contentType: string;
 }

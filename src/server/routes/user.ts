@@ -1,7 +1,10 @@
 import express from 'express';
+import multer from 'multer';
+import sharp from 'sharp';
 import checkAuth from '../middleware/check-auth';
 import validator from '../middleware/validator';
 import verification from '../middleware/verification';
+import Avatar from '../models/avatar';
 import asyncHandler from '../util/async-handler';
 
 const router = express.Router();
@@ -61,9 +64,46 @@ router.post(
 	})
 );
 
+// Get user avatar
 router.get('/avatar', (req, res) => {
 	res.redirect(`/avatar?id=${req.user!._id}`);
 });
+
+const upload = multer();
+router.put(
+	'/avatar',
+	upload.single('avatar'),
+	asyncHandler(async (req, res) => {
+		const { file } = req;
+		if (!file) {
+			return res.status(400).json({
+				status: 400,
+				message: 'Missing "avatar" request property',
+			});
+		}
+
+		const { buffer, mimetype } = file;
+		if (!mimetype.startsWith('image')) {
+			return res.status(400).json({
+				status: 400,
+				message: '"avatar" file mimetype must be of type "image"',
+			});
+		}
+
+		const resized = await sharp(buffer).resize(256, 256).toBuffer();
+		const avatar =
+			(await req.user!.getAvatar()) || new Avatar({ _id: req.user!._id });
+
+		avatar.data = resized;
+		avatar.contentType = mimetype;
+		await avatar.save();
+
+		res.json({
+			status: 200,
+			message: 'Avatar updated successfully',
+		});
+	})
+);
 
 // Log out user session
 router.post('/logout', (req, res) => {

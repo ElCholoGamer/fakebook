@@ -1,5 +1,6 @@
 import { compare, hash } from 'bcrypt';
 import { Document, model, Schema } from 'mongoose';
+import Avatar, { IAvatar } from './avatar';
 
 export interface IUser extends Document {
 	username: string;
@@ -10,6 +11,7 @@ export interface IUser extends Document {
 	code?: string;
 	comparePassword(password: string): Promise<boolean>;
 	encryptPassword(salt?: number): Promise<void>;
+	getAvatar(): Promise<IAvatar | null>;
 }
 
 const UserSchema = new Schema({
@@ -20,6 +22,10 @@ const UserSchema = new Schema({
 	verified: { type: Boolean, required: true, default: false },
 	code: String,
 });
+
+UserSchema.methods.getAvatar = async function () {
+	return await Avatar.findById(this._id);
+};
 
 UserSchema.methods.comparePassword = function (password: string) {
 	return compare(password, this.password);
