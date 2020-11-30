@@ -43,8 +43,7 @@ router.post(
 			});
 		}
 
-		const { code = '' } = req.query;
-		if (code !== req.user!.code) {
+		if (req.query.code !== req.user!.code) {
 			return res.status(401).json({
 				status: 401,
 				message: 'Invalid code',
