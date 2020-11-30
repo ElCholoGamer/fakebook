@@ -1,11 +1,13 @@
 import express from 'express';
 import checkAuth from '../middleware/check-auth';
 import validator from '../middleware/validator';
+import verification from '../middleware/verification';
 import asyncHandler from '../util/async-handler';
 
 const router = express.Router();
 
 router.use(checkAuth()); // Check that user is authenticated
+router.use(verification({ bypassPaths: ['/', '/verify'] })); // Check that user is verified
 
 // Get user info
 router.get('/', (req, res) => res.json({ status: 200, user: req.user }));
@@ -31,9 +33,16 @@ router.put(
 	})
 );
 
-router.get(
+router.post(
 	'/verify',
 	asyncHandler(async (req, res) => {
+		if (req.user!.verified) {
+			return res.status(409).json({
+				status: 409,
+				message: 'User is already verified',
+			});
+		}
+
 		const { code = '' } = req.query;
 		if (code !== req.user!.code) {
 			return res.status(401).json({
@@ -43,7 +52,7 @@ router.get(
 		}
 
 		req.user!.verified = true;
-		delete req.user!.code;
+		req.user!.code = undefined;
 		await req.user!.save();
 
 		res.json({
