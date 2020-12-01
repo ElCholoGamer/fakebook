@@ -1,6 +1,7 @@
 import express from 'express';
 import passport from 'passport';
 import { IVerifyOptions } from 'passport-local';
+import checkAuth from '../middleware/check-auth';
 import validator from '../middleware/validator';
 import { IUser } from '../models/user';
 
@@ -33,10 +34,12 @@ const authCallback = (req: express.Request, res: express.Response) => (
 	});
 };
 
+// Log in user session
 router.post('/login', (req, res) => {
 	passport.authenticate('local-login', authCallback(req, res))(req, res);
 });
 
+// Register new user
 router.post(
 	'/register',
 	validator({
@@ -48,5 +51,14 @@ router.post(
 		passport.authenticate('local-register', authCallback(req, res))(req, res);
 	}
 );
+
+// Log out user session
+router.post('/logout', checkAuth(), (req, res) => {
+	req.logout();
+	res.json({
+		status: 200,
+		message: 'Logged out successfully',
+	});
+});
 
 export default router;

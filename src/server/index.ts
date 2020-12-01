@@ -6,10 +6,9 @@ import session from 'express-session';
 import mongoose from 'mongoose';
 import morgan from 'morgan';
 import passport from 'passport';
-import { join, resolve } from 'path';
-import indexRouter from './routes';
+import mainRouter from './routes/main';
+import apiRouter from './routes/api';
 import authRouter from './routes/auth';
-import userRouter from './routes/user';
 import initPassport from './util/passport';
 
 dotenv.config();
@@ -44,29 +43,12 @@ app.use(
 app.use(passport.initialize());
 app.use(passport.session());
 
+// Either static files or main router
+app.use(process.env.TS_NODE_DEV ? express.static('public') : mainRouter);
+
 // Routes
-app.use('/', indexRouter);
 app.use('/auth', authRouter);
-app.use('/user', userRouter);
-
-// Static files and React app
-if (!process.env.TS_NODE_DEV) {
-	const BUILD = resolve(__dirname, '../build');
-	app.use(express.static(BUILD));
-
-	app.get('*', (req, res, next) => {
-		const {
-			method,
-			headers: { accept = '' },
-		} = req;
-
-		if (method === 'GET' && accept.indexOf('text/html') !== -1) {
-			res.sendFile(join(BUILD, 'index.html'));
-		} else {
-			next();
-		}
-	});
-}
+app.use('/api', apiRouter);
 
 // Connect to database
 console.log('Connecting to database...');

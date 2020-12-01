@@ -21,7 +21,7 @@ const App: React.FC = () => {
 		}
 
 		axios
-			.get('/user')
+			.get('/api/user')
 			.then(res => setUser(res.data.user))
 			.catch(err => {
 				localStorage.removeItem('loggedIn');

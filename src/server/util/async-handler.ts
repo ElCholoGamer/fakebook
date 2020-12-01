@@ -12,7 +12,7 @@ function asyncHandler(
 	options: Options = {}
 ): RequestHandler {
 	const {
-		doNext = true,
+		doNext = false,
 		silent = false,
 		failMessage = 'An error occurred!',
 		failStatus = 500,
@@ -26,7 +26,7 @@ function asyncHandler(
 				if (!silent) console.error(err);
 				res.status(failStatus).json({
 					status: failStatus,
-					message: failMessage,
+					message: err.message || failMessage,
 				});
 			} else {
 				next(err);
