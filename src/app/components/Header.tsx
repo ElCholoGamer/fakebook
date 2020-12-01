@@ -4,6 +4,8 @@ import Button from 'react-bootstrap/Button';
 import ButtonGroup from 'react-bootstrap/ButtonGroup';
 import Navbar from 'react-bootstrap/Navbar';
 import { User } from '../utils';
+import DefaultAvatar from '../assets/default_avatar.png';
+import LazyImage from './LazyImage';
 
 interface Props {
 	user: User | null;
@@ -26,10 +28,17 @@ const Header: React.FC<Props> = ({ user }) => {
 			<Navbar.Collapse className="justify-content-end">
 				{user ? (
 					<>
-						<Navbar.Text>
+						<Navbar.Text className="p-0">
 							Logged in as:{' '}
 							<a href="/account" className="text-light font-weight-bold">
 								{user.username}
+								<LazyImage
+									src="/user/avatar"
+									className="rounded-circle mx-2"
+									width={50}
+									height={50}
+									fallbackSrc={DefaultAvatar}
+								/>
 							</a>
 						</Navbar.Text>
 						<Button
