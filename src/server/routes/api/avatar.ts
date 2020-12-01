@@ -7,34 +7,43 @@ import verification from '../../middleware/verification';
 
 const router = express.Router();
 
+// Get self user avatar
 router.get(
 	'/',
+	asyncHandler(async (req, res) => {
+		// Get user avatar or default
+		const avatar = await req.user!.getAvatar();
+		if (!avatar) return res.redirect('/assets/default_avatar.png');
+
+		// Send image response
+		const { contentType, data } = avatar;
+		res.contentType(contentType).send(data);
+	})
+);
+
+// Get a user's avatar
+router.get(
+	'/:id',
+	verification(),
 	asyncHandler(
 		async (req, res) => {
-			const { id } = req.query;
-			if (id && !req.user?.verified) {
-				return res.status(401).json({
-					status: 401,
-					message: 'User is not verified',
-				});
-			}
+			const { id } = req.params;
 
 			// Get user avatar or default
-			const avatar = await Avatar.findById(id || req.user!.id);
+			const avatar = await Avatar.findById(id);
 			if (!avatar) return res.redirect('/assets/default_avatar.png');
 
+			// Send image response
 			const { contentType, data } = avatar;
 			res.contentType(contentType).send(data);
 		},
 		{
-			doNext: false,
 			silent: true,
-			failMessage: 'Avatar not found',
-			failStatus: 404,
 		}
 	)
 );
 
+// Update avatar
 const upload = multer();
 router.put(
 	'/',
@@ -76,6 +85,7 @@ router.put(
 	})
 );
 
+// Remove user avatar
 router.delete(
 	'/',
 	verification(),
