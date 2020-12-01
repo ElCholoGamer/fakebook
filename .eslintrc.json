@@ -25,7 +25,8 @@
 		"prefer-template": "error",
 		"no-useless-concat": "error",
 		"no-mixed-spaces-and-tabs": "off",
-		"react/no-children-prop": "off"
+		"react/no-children-prop": "off",
+		"react/no-unescaped-entities": "off"
 	},
 	"settings": {
 		"react": {
