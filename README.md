@@ -6,8 +6,6 @@ Ah yes, yet another way of procrastinating homework whilst feeling productive
 
 ### (DISCLAIMER: For obvious reasons, this project has no intent of ganing profit and all that stuff, all credit goes to [Facebook](https://facebook.com) for the idea)
 
-<br />
-
 ## Usage
 
 Clone the repo:
