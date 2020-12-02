@@ -1,0 +1,16 @@
+#account-toggle {
+	cursor: pointer;
+}
+
+#account-toggle:hover {
+	text-decoration: underline;
+}
+
+.dropdown-menu > a {
+	transition: background-color 150ms ease;
+}
+
+.dropdown-menu > a:hover {
+	background-color: #212529;
+	font-weight: 500;
+}
