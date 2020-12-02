@@ -1,4 +1,5 @@
 import express from 'express';
+import checkAuth from '../../middleware/check-auth';
 import validator from '../../middleware/validator';
 import verification from '../../middleware/verification';
 import User from '../../models/user';
@@ -9,9 +10,22 @@ const router = express.Router();
 // Get user info
 router.get(
 	'/',
+	checkAuth(),
+	asyncHandler(async (req, res) => {
+		console.log('A');
+		res.json({
+			status: 200,
+			user: req.user,
+		});
+	})
+);
+
+// Get another user's info
+router.get(
+	'/:id',
 	asyncHandler(
 		async (req, res) => {
-			const { id } = req.query;
+			const { id } = req.params;
 			if (id && !req.user?.verified) {
 				return res.status(401).json({
 					status: 401,
@@ -20,10 +34,7 @@ router.get(
 			}
 
 			const user = await User.findById(id || req.user!.id);
-			if (
-				!user?.verified &&
-				user?._id.toString() !== req.user!._id.toString()
-			) {
+			if (!user?.verified) {
 				res.status(404).json({
 					status: 404,
 					message: `User by ID "${id}" not found`,
@@ -45,6 +56,7 @@ router.get(
 // Update user info
 router.put(
 	'/',
+	checkAuth(),
 	verification(),
 	validator({
 		username: { type: 'string', required: false, minLength: 1 },

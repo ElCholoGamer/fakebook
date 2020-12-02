@@ -1,15 +1,17 @@
 import express from 'express';
-import Avatar from '../../models/avatar';
-import asyncHandler from '../../util/async-handler';
 import multer from 'multer';
 import sharp from 'sharp';
+import checkAuth from '../../middleware/check-auth';
 import verification from '../../middleware/verification';
+import Avatar from '../../models/avatar';
+import asyncHandler from '../../util/async-handler';
 
 const router = express.Router();
 
-// Get self user avatar
+// Get user avatar
 router.get(
 	'/',
+	checkAuth(),
 	asyncHandler(async (req, res) => {
 		// Get user avatar or default
 		const avatar = await req.user!.getAvatar();
@@ -21,12 +23,12 @@ router.get(
 	})
 );
 
-// Get a user's avatar
+// Get another user's avatar
 router.get(
 	'/:id',
-	verification(),
 	asyncHandler(
 		async (req, res) => {
+			console.log('Req');
 			const { id } = req.params;
 
 			// Get user avatar or default
@@ -47,6 +49,7 @@ router.get(
 const upload = multer();
 router.put(
 	'/',
+	checkAuth(),
 	verification(),
 	upload.single('avatar'),
 	asyncHandler(async (req, res) => {

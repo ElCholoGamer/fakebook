@@ -2,7 +2,7 @@ import express from 'express';
 import checkAuth from '../../middleware/check-auth';
 import asyncHandler from '../../util/async-handler';
 import postsRouter from './posts';
-import usersRouter from './user';
+import userRouter from './user';
 import avatarRouter from './avatar';
 
 const router = express.Router();
@@ -11,7 +11,7 @@ router.use(checkAuth()); // Check that user is logged in
 
 // Sub-routes
 router.use('/posts', postsRouter);
-router.use('/user', usersRouter);
+router.use('/user', userRouter);
 router.use('/avatar', avatarRouter);
 
 // Index API endpoint
