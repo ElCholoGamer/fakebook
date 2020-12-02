@@ -12,7 +12,6 @@ router.get(
 	'/',
 	checkAuth(),
 	asyncHandler(async (req, res) => {
-		console.log('A');
 		res.json({
 			status: 200,
 			user: req.user,
@@ -26,14 +25,8 @@ router.get(
 	asyncHandler(
 		async (req, res) => {
 			const { id } = req.params;
-			if (id && !req.user?.verified) {
-				return res.status(401).json({
-					status: 401,
-					message: 'User is not verified',
-				});
-			}
+			const user = await User.findById(id);
 
-			const user = await User.findById(id || req.user!.id);
 			if (!user?.verified) {
 				res.status(404).json({
 					status: 404,

@@ -31,7 +31,7 @@ const registerStrategy = new LocalStrategy(
 			return done(null, false, { message: 'The provided email is invalid' });
 		}
 
-		// Generate code
+		// Generate verification code
 		const code = new Array(6)
 			.fill(0)
 			.map(() => Math.floor(Math.random() * 10))

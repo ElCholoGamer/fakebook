@@ -28,11 +28,8 @@ router.get(
 	'/:id',
 	asyncHandler(
 		async (req, res) => {
-			console.log('Req');
-			const { id } = req.params;
-
 			// Get user avatar or default
-			const avatar = await Avatar.findById(id);
+			const avatar = await Avatar.findById(req.params.id);
 			if (!avatar) return res.redirect('/assets/default_avatar.png');
 
 			// Send image response
