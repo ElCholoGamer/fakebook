@@ -10,6 +10,8 @@ const Login = React.lazy(() => import('./pages/Login'));
 const Register = React.lazy(() => import('./pages/Register'));
 const Posts = React.lazy(() => import('./pages/Posts'));
 const Account = React.lazy(() => import('./pages/Account'));
+const Post = React.lazy(() => import('./pages/Post'));
+const CookiesFooter = React.lazy(() => import('./components/CookiesFooter'));
 
 const App: React.FC = () => {
 	const [user, setUser] = React.useState<User | null>(null);
@@ -36,14 +38,16 @@ const App: React.FC = () => {
 		<React.Suspense fallback={<Loading />}>
 			<Header user={user} />
 			<Switch>
-				<Route exact path="/" component={Home} />
+				<Route exact path="/" children={<Home user={user} />} />
 				<Route exact path="/login" component={Login} />
 				<Route exact path="/register" component={Register} />
 				<Route exact path="/posts" component={Posts} />
+				<Route exact path="/post" component={Post} />
 				<Route exact path="/account" children={<Account user={user} />} />
 
 				<Redirect to="/" />
 			</Switch>
+			<CookiesFooter />
 		</React.Suspense>
 	);
 };
