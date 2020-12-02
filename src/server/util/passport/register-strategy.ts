@@ -11,12 +11,18 @@ const registerStrategy = new LocalStrategy(
 		passReqToCallback: true,
 	},
 	async (req, email, password, done) => {
-		const username = req.body.username.trim();
+		const username: string = req.body.username.trim();
+		email = email.toLowerCase().trim();
 
 		// Check if user with email already exists
 		const existing = await User.findOne({ email });
 		if (existing) {
 			return done(null, false, { message: 'Email is already registered' });
+		}
+
+		// Validate username
+		if (username.length > 15) {
+			return done(null, false, { message: 'Username is too long' });
 		}
 
 		// Validate password
