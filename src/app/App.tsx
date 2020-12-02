@@ -8,9 +8,9 @@ const Header = lazy(() => import('./components/Header'));
 const Home = lazy(() => import('./pages/Home'));
 const Login = lazy(() => import('./pages/Login'));
 const Register = lazy(() => import('./pages/Register'));
-const Posts = lazy(() => import('./pages/Posts'));
+const Posts = lazy(() => import('./pages/Posts/AddPost'));
 const Account = lazy(() => import('./pages/Account'));
-const Post = lazy(() => import('./pages/Post'));
+const AddPost = lazy(() => import('./pages/Posts/AddPost'));
 const CookiesFooter = lazy(() => import('./components/CookiesFooter'));
 
 const App: React.FC = () => {
@@ -42,7 +42,7 @@ const App: React.FC = () => {
 				<Route exact path="/login" component={Login} />
 				<Route exact path="/register" component={Register} />
 				<Route exact path="/posts" component={Posts} />
-				<Route exact path="/post" component={Post} />
+				<Route exact path="/posts/add" component={AddPost} />
 				<Route exact path="/account" children={<Account user={user} />} />
 
 				<Redirect to="/" />

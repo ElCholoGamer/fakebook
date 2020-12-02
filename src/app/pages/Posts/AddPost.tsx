@@ -1,5 +1,5 @@
 import React from 'react';
-import { User } from '../utils';
+import { User } from '../../utils';
 
 interface Props {
 	user: User | null;

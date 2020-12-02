@@ -65,7 +65,7 @@ const Header: React.FC<Props> = ({ user }) => {
 					</NavItem>
 					{user && (
 						<NavItem>
-							<NavLink href="/post">
+							<NavLink href="/posts/add">
 								<PencilFill />
 							</NavLink>
 						</NavItem>
