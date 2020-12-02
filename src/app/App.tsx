@@ -8,7 +8,7 @@ const Header = lazy(() => import('./components/Header'));
 const Home = lazy(() => import('./pages/Home'));
 const Login = lazy(() => import('./pages/Login'));
 const Register = lazy(() => import('./pages/Register'));
-const Posts = lazy(() => import('./pages/Posts/AddPost'));
+const Posts = lazy(() => import('./pages/Posts'));
 const Account = lazy(() => import('./pages/Account'));
 const AddPost = lazy(() => import('./pages/Posts/AddPost'));
 const CookiesFooter = lazy(() => import('./components/CookiesFooter'));
