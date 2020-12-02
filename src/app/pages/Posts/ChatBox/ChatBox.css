@@ -1,8 +1,22 @@
 #chat-wrapper {
 	width: 500px;
+	min-width: 350px;
 }
 
 #chat-box {
 	overflow-y: scroll;
 	flex-grow: 1;
+}
+
+#chat-close {
+	cursor: pointer;
+	transition: filter 80ms ease;
+}
+
+#chat-close:hover {
+	filter: brightness(95%);
+}
+
+#chat-close:active {
+	filter: brightness(90%);
 }

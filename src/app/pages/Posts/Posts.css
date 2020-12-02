@@ -4,5 +4,10 @@
 
 #posts-wrapper {
 	overflow-y: scroll;
-	flex-grow: 1;
+}
+
+#chat-button {
+	position: absolute;
+	bottom: 0;
+	right: 0;
 }
