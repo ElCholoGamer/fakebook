@@ -1,6 +1,6 @@
+import './util/config';
 import connectMongo from 'connect-mongo';
 import cors from 'cors';
-import dotenv from 'dotenv';
 import express from 'express';
 import session from 'express-session';
 import mongoose from 'mongoose';
@@ -10,8 +10,6 @@ import mainRouter from './routes/main';
 import apiRouter from './routes/api';
 import authRouter from './routes/auth';
 import initPassport from './util/passport';
-
-dotenv.config();
 
 // Initialization
 const app = express();

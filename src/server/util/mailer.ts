@@ -1,11 +1,8 @@
-import dotenv from 'dotenv';
 import { readFileSync } from 'fs';
 import nodemailer from 'nodemailer';
 import Mail from 'nodemailer/lib/mailer';
 
-dotenv.config();
-
-const template = readFileSync('./public/email-template.html').toString();
+const template = readFileSync('./assets/template.html').toString();
 const { MAILER_EMAIL = '', MAILER_PASSWORD = '' } = process.env;
 
 const transporter = nodemailer.createTransport({
