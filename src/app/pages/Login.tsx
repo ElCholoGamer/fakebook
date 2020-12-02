@@ -1,5 +1,5 @@
 import axios, { AxiosError } from 'axios';
-import React from 'react';
+import React, { useState } from 'react';
 import Alert from 'react-bootstrap/Alert';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
@@ -8,8 +8,8 @@ import FormRow from '../components/FormRow';
 
 const Login: React.FC = () => {
 	const history = useHistory();
-	const [message, setMessage] = React.useState('');
-	const [data, setData] = React.useState({ email: '', password: '' });
+	const [message, setMessage] = useState('');
+	const [data, setData] = useState({ email: '', password: '' });
 
 	if (localStorage.getItem('loggedIn') === 'yes') history.push('/');
 

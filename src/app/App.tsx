@@ -1,23 +1,23 @@
 import axios from 'axios';
-import React from 'react';
+import React, { lazy, useState, useEffect } from 'react';
 import { Redirect, Route, Switch } from 'react-router-dom';
 import Loading from './components/Loading';
 import { User } from './utils';
 
-const Header = React.lazy(() => import('./components/Header'));
-const Home = React.lazy(() => import('./pages/Home'));
-const Login = React.lazy(() => import('./pages/Login'));
-const Register = React.lazy(() => import('./pages/Register'));
-const Posts = React.lazy(() => import('./pages/Posts'));
-const Account = React.lazy(() => import('./pages/Account'));
-const Post = React.lazy(() => import('./pages/Post'));
-const CookiesFooter = React.lazy(() => import('./components/CookiesFooter'));
+const Header = lazy(() => import('./components/Header'));
+const Home = lazy(() => import('./pages/Home'));
+const Login = lazy(() => import('./pages/Login'));
+const Register = lazy(() => import('./pages/Register'));
+const Posts = lazy(() => import('./pages/Posts'));
+const Account = lazy(() => import('./pages/Account'));
+const Post = lazy(() => import('./pages/Post'));
+const CookiesFooter = lazy(() => import('./components/CookiesFooter'));
 
 const App: React.FC = () => {
-	const [user, setUser] = React.useState<User | null>(null);
-	const [loaded, setLoaded] = React.useState(false);
+	const [user, setUser] = useState<User | null>(null);
+	const [loaded, setLoaded] = useState(false);
 
-	React.useEffect(() => {
+	useEffect(() => {
 		if (localStorage.getItem('loggedIn') !== 'yes') {
 			return setLoaded(true);
 		}

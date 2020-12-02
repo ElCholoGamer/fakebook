@@ -1,5 +1,5 @@
 import axios from 'axios';
-import React from 'react';
+import React, { forwardRef } from 'react';
 import Nav from 'react-bootstrap/Nav';
 import Button from 'react-bootstrap/Button';
 import ButtonGroup from 'react-bootstrap/ButtonGroup';
@@ -24,7 +24,7 @@ interface RefProps {
  * but apparently this thing works.
  */
 // eslint-disable-next-line react/display-name
-const CustomToggle = React.forwardRef<HTMLSpanElement, RefProps>(
+const CustomToggle = forwardRef<HTMLSpanElement, RefProps>(
 	({ children, onClick }, ref) => (
 		<span
 			id="account-toggle"

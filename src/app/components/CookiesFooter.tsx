@@ -1,8 +1,8 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Button from 'react-bootstrap/Button';
 
 const CookiesFooter: React.FC = () => {
-	const [hidden, setHidden] = React.useState(
+	const [hidden, setHidden] = useState(
 		localStorage.getItem('cookiesDismissed') === 'yes'
 	);
 
