@@ -1,0 +1,8 @@
+#posts-page-wrapper {
+	height: 89.9vh;
+}
+
+#posts-wrapper {
+	overflow-y: scroll;
+	flex-grow: 1;
+}

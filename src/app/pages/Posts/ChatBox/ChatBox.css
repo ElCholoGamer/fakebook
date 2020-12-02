@@ -1,0 +1,8 @@
+#chat-wrapper {
+	width: 500px;
+}
+
+#chat-box {
+	overflow-y: scroll;
+	flex-grow: 1;
+}
