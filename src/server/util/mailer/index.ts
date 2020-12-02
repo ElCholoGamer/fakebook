@@ -2,11 +2,10 @@ import dotenv from 'dotenv';
 import { readFileSync } from 'fs';
 import nodemailer from 'nodemailer';
 import Mail from 'nodemailer/lib/mailer';
-import { resolve } from 'path';
 
 dotenv.config();
 
-const mail = readFileSync(resolve(__dirname, 'template.html')).toString();
+const template = readFileSync('./public/email-template.html').toString();
 const { MAILER_EMAIL = '', MAILER_PASSWORD = '' } = process.env;
 
 const transporter = nodemailer.createTransport({
@@ -23,7 +22,7 @@ const sendCode = (to: string, code: string) =>
 			from: MAILER_EMAIL,
 			to,
 			subject: 'Your Fakebook code',
-			html: mail.replace(/%CODE%/g, code),
+			html: template.replace(/%CODE%/g, code),
 		};
 
 		transporter.sendMail(options, (err, info) => {
