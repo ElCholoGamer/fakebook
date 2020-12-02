@@ -10,6 +10,7 @@ interface Props<T extends Record<string, any>> {
 	value: keyof T;
 	placeholder?: string;
 	type?: string;
+	autoFocus?: boolean;
 }
 
 const FormRow = <T extends Record<string, any>>({
@@ -19,12 +20,14 @@ const FormRow = <T extends Record<string, any>>({
 	value,
 	placeholder,
 	type = 'text',
+	autoFocus,
 }: Props<T>) => {
 	return (
 		<Form.Group as={Row}>
 			<Form.Label column>{label}</Form.Label>
 			<Col sm={10}>
 				<Form.Control
+					autoFocus={autoFocus}
 					value={data[value]}
 					name="email"
 					onChange={e =>

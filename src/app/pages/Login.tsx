@@ -21,7 +21,7 @@ const Login: React.FC = () => {
 			.post('/auth/login', data)
 			.then(() => {
 				localStorage.setItem('loggedIn', 'yes');
-				location.href = '/';
+				location.href = '/posts';
 			})
 			.catch((err: AxiosError) => {
 				console.error(err);
@@ -39,6 +39,7 @@ const Login: React.FC = () => {
 			<Form>
 				<FormRow
 					data={data}
+					autoFocus
 					setData={setData}
 					value="email"
 					type="email"

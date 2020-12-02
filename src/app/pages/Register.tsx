@@ -49,6 +49,7 @@ const Register: React.FC = () => {
 			<Form>
 				<FormRow
 					data={data}
+					autoFocus
 					value="email"
 					placeholder="Your email..."
 					setData={setData}
