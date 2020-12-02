@@ -9,7 +9,7 @@ import NavItem from 'react-bootstrap/NavItem';
 import NavLink from 'react-bootstrap/NavLink';
 import { PencilFill } from 'react-bootstrap-icons';
 import Dropdown from 'react-bootstrap/Dropdown';
-import './Header.css';
+import './Header.scss';
 
 interface Props {
 	user: User | null;

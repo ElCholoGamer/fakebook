@@ -1,0 +1,29 @@
+#header {
+	height: 66px;
+}
+
+#header-offset {
+	height: 66px;
+}
+
+#account-toggle {
+	transition: filter 100ms ease;
+	cursor: pointer;
+
+	&:hover {
+		text-decoration: underline;
+		filter: brightness(95%);
+	}
+
+	&:active {
+		filter: brightness(90%);
+	}
+}
+
+.dropdown-menu > a {
+	transition: background-color 150ms ease;
+	&:hover {
+		background-color: #212529;
+		font-weight: 500;
+	}
+}

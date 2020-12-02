@@ -1,7 +1,7 @@
 import React from 'react';
 import { XCircleFill } from 'react-bootstrap-icons';
 import Form from 'react-bootstrap/Form';
-import './ChatBox.css';
+import './ChatBox.scss';
 
 interface Props {
 	setChat: React.Dispatch<React.SetStateAction<boolean>>;

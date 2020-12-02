@@ -11,12 +11,12 @@
 #chat-close {
 	cursor: pointer;
 	transition: filter 80ms ease;
-}
 
-#chat-close:hover {
-	filter: brightness(95%);
-}
+	&:hover {
+		filter: brightness(95%);
+	}
 
-#chat-close:active {
-	filter: brightness(90%);
+	&:active {
+		filter: brightness(90%);
+	}
 }

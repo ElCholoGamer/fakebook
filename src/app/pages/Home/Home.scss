@@ -8,17 +8,17 @@
 	border-radius: 21px;
 	-webkit-transform: rotate(30deg);
 	transform: rotate(30deg);
-}
 
-.product-device::before {
-	position: absolute;
-	top: 10%;
-	right: 10px;
-	bottom: 10%;
-	left: 10px;
-	content: '';
-	background-color: rgba(255, 255, 255, 0.1);
-	border-radius: 5px;
+	&::before {
+		position: absolute;
+		top: 10%;
+		right: 10px;
+		bottom: 10%;
+		left: 10px;
+		content: '';
+		background-color: rgba(255, 255, 255, 0.1);
+		border-radius: 5px;
+	}
 }
 
 .product-device-2 {

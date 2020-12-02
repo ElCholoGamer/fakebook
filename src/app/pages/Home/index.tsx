@@ -2,7 +2,7 @@ import React from 'react';
 import Button from 'react-bootstrap/Button';
 import Col from 'react-bootstrap/Col';
 import { User } from '../../utils';
-import './Home.css';
+import './Home.scss';
 
 interface Props {
 	user: User | null;
