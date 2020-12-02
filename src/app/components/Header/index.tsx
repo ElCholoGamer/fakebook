@@ -55,49 +55,53 @@ const Header: React.FC<Props> = ({ user }) => {
 	};
 
 	return (
-		<Navbar bg="dark" variant="dark" expand="sm">
-			<Navbar.Brand href="/">Fakebook</Navbar.Brand>
-			<Navbar.Toggle />
-			<Navbar.Collapse className="justify-content-between">
-				<Nav>
-					<NavItem>
-						<NavLink href="/posts">Posts</NavLink>
-					</NavItem>
-					{user && (
+		<>
+			<Navbar id="header" fixed="top" bg="dark" variant="dark" expand="sm">
+				<Navbar.Brand href="/">Fakebook</Navbar.Brand>
+				<Navbar.Toggle />
+				<Navbar.Collapse className="justify-content-between">
+					<Nav>
 						<NavItem>
-							<NavLink href="/posts/add">
-								<PencilFill />
-							</NavLink>
+							<NavLink href="/posts">Posts</NavLink>
 						</NavItem>
-					)}
-				</Nav>
-				{user ? (
-					<Navbar.Text className="p-0">
-						<Dropdown className="d-inline">
-							<Dropdown.Toggle as={CustomToggle} variant="primary">
-								{user.username}
-							</Dropdown.Toggle>
+						{user && (
+							<NavItem>
+								<NavLink href="/posts/add">
+									<PencilFill />
+								</NavLink>
+							</NavItem>
+						)}
+					</Nav>
+					{user ? (
+						<Navbar.Text className="p-0">
+							<Dropdown alignRight className="d-inline">
+								<Dropdown.Toggle as={CustomToggle} variant="primary">
+									{user.username}
+								</Dropdown.Toggle>
 
-							<Dropdown.Menu className="bg-dark">
-								<Dropdown.Item href="/account">My Account</Dropdown.Item>
-								<Dropdown.Item className="text-danger" onClick={handleClick}>
-									Log Out
-								</Dropdown.Item>
-							</Dropdown.Menu>
-						</Dropdown>
-					</Navbar.Text>
-				) : (
-					<ButtonGroup>
-						<Button variant="primary" href="/login">
-							Log In
-						</Button>
-						<Button variant="primary" href="/register">
-							Register
-						</Button>
-					</ButtonGroup>
-				)}
-			</Navbar.Collapse>
-		</Navbar>
+								<Dropdown.Menu className="bg-dark">
+									<Dropdown.Item href="/account">My Account</Dropdown.Item>
+									<Dropdown.Item className="text-danger" onClick={handleClick}>
+										Log Out
+									</Dropdown.Item>
+								</Dropdown.Menu>
+							</Dropdown>
+						</Navbar.Text>
+					) : (
+						<ButtonGroup>
+							<Button variant="primary" href="/login">
+								Log In
+							</Button>
+							<Button variant="primary" href="/register">
+								Register
+							</Button>
+						</ButtonGroup>
+					)}
+				</Navbar.Collapse>
+			</Navbar>
+
+			<div id="header-offset"></div>
+		</>
 	);
 };
 
