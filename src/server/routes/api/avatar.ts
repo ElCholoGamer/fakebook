@@ -95,6 +95,7 @@ router.put(
 // Remove user avatar
 router.delete(
 	'/',
+	checkAuth(),
 	verification(),
 	asyncHandler(async (req, res) => {
 		const avatar = await req.user!.getAvatar();
