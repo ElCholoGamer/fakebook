@@ -5,8 +5,11 @@ import checkAuth from '../../middleware/check-auth';
 import verification from '../../middleware/verification';
 import Avatar from '../../models/avatar';
 import asyncHandler from '../../util/async-handler';
+import { readFileSync } from 'fs';
 
 const router = express.Router();
+
+const DEFAULT_AVATAR = readFileSync('./assets/default_avatar.png');
 
 // Get user avatar
 router.get(
@@ -15,10 +18,12 @@ router.get(
 	asyncHandler(async (req, res) => {
 		// Get user avatar or default
 		const avatar = await req.user!.getAvatar();
-		if (!avatar) return res.redirect('/assets/default_avatar.png');
 
 		// Send image response
-		const { contentType, data } = avatar;
+		const { contentType, data } = avatar || {
+			contentType: 'image/png',
+			data: DEFAULT_AVATAR,
+		};
 		res.contentType(contentType).send(data);
 	})
 );
@@ -30,10 +35,12 @@ router.get(
 		async (req, res) => {
 			// Get user avatar or default
 			const avatar = await Avatar.findById(req.params.id);
-			if (!avatar) return res.redirect('/assets/default_avatar.png');
 
 			// Send image response
-			const { contentType, data } = avatar;
+			const { contentType, data } = avatar || {
+				contentType: 'image/png',
+				data: DEFAULT_AVATAR,
+			};
 			res.contentType(contentType).send(data);
 		},
 		{
