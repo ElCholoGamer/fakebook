@@ -4,3 +4,12 @@ export interface User {
 	bio: string;
 	verified: boolean;
 }
+
+export interface ChatMessage {
+	id: string;
+	author: {
+		_id: string;
+		username: string;
+	};
+	content: string;
+}

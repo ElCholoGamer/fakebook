@@ -1,9 +1,14 @@
 import React, { useState } from 'react';
 import Button from 'react-bootstrap/esm/Button';
+import { User } from '../../utils';
 import ChatBox from './ChatBox';
 import './Posts.css';
 
-const Posts: React.FC = () => {
+interface Props {
+	user: User | null;
+}
+
+const Posts: React.FC<Props> = ({ user }) => {
 	const { clientWidth } = document.body;
 	const [chat, setChat] = useState(clientWidth > 800);
 
@@ -25,7 +30,7 @@ const Posts: React.FC = () => {
 				</div>
 			)}
 			{chat ? (
-				<ChatBox setChat={setChat} />
+				<ChatBox user={user} setChat={setChat} />
 			) : (
 				<Button
 					id="chat-button"

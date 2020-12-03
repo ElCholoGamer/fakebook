@@ -41,7 +41,7 @@ const App: React.FC = () => {
 				<Route exact path="/" children={<Home user={user} />} />
 				<Route exact path="/login" component={Login} />
 				<Route exact path="/register" component={Register} />
-				<Route exact path="/posts" component={Posts} />
+				<Route exact path="/posts" children={<Posts user={user} />} />
 				<Route exact path="/posts/add" component={AddPost} />
 				<Route exact path="/account" children={<Account user={user} />} />
 
