@@ -14,7 +14,7 @@ function asyncHandler(
 	const {
 		doNext = false,
 		silent = false,
-		failMessage = 'An error occurred!',
+		failMessage,
 		failStatus = 500,
 	} = options;
 
@@ -26,7 +26,7 @@ function asyncHandler(
 				if (!silent) console.error(err);
 				res.status(failStatus).json({
 					status: failStatus,
-					message: err.message || failMessage,
+					message: failMessage || err.message || '[unknown error]',
 				});
 			} else {
 				next(err);

@@ -28,7 +28,7 @@ export interface IPost extends Document {
 	author: IAuthor;
 	content?: string;
 	image: boolean;
-	likes: number;
+	likes: Types.ObjectId[];
 	comments: IComment[];
 	createdAt: Date;
 	updatedAt: Date;
@@ -40,7 +40,7 @@ const PostSchema = new Schema(
 		author: { type: AuthorSchema, required: true },
 		content: { type: String, trim: true },
 		image: { type: Boolean, required: true, default: false },
-		likes: { type: Number, required: true, default: 0 },
+		likes: { type: [Types.ObjectId], required: true },
 		comments: { type: [CommentSchema], required: true },
 	},
 	{ timestamps: true }

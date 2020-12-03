@@ -18,7 +18,6 @@ function postGetter(options: Options = {}): RequestHandler {
 	return asyncHandler(
 		async (req, res, next) => {
 			const { id } = req.params;
-			console.log('ID:', id);
 			const post = await Post.findById(id);
 
 			if (!post) {
