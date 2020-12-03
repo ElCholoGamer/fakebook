@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { XCircleFill } from 'react-bootstrap-icons';
 import Spinner from 'react-bootstrap/Spinner';
 import Form from 'react-bootstrap/Form';
@@ -12,6 +12,7 @@ interface Props {
 }
 
 const ChatBox: React.FC<Props> = ({ setChat, user }) => {
+	const chatBoxRef = useRef<HTMLDivElement>(null);
 	const [socket, setSocket] = useState<WebSocket | null>(null);
 	const [input, setInput] = useState('');
 	const [messages, setMessages] = useState<ChatMessage[]>([]);
@@ -22,7 +23,6 @@ const ChatBox: React.FC<Props> = ({ setChat, user }) => {
 		const actualHost =
 			process.env.NODE_ENV === 'development' ? 'localhost:5000' : host;
 
-		setLoaded(false);
 		const wsProtocol = `ws${protocol === 'https:' ? 's' : ''}:`;
 		const socket = new WebSocket(`${wsProtocol}//${actualHost}/chat`);
 
@@ -30,6 +30,8 @@ const ChatBox: React.FC<Props> = ({ setChat, user }) => {
 			setLoaded(true);
 			console.log('WebSocket connected!');
 		};
+
+		socket.onclose = () => setLoaded(false);
 
 		// On message received
 		socket.onmessage = ({ data }) => {
@@ -44,6 +46,15 @@ const ChatBox: React.FC<Props> = ({ setChat, user }) => {
 		setSocket(socket);
 		return () => socket.close();
 	}, []);
+
+	// Auto-scroll
+	useEffect(() => {
+		const { current: chatBox } = chatBoxRef;
+		if (!chatBox) return;
+
+		const scrollHeight = Math.max(chatBox.scrollHeight, chatBox.clientHeight);
+		chatBox.scrollTop = scrollHeight - chatBox.clientHeight;
+	}, [messages]);
 
 	const handleChange = (e: React.ChangeEvent<HTMLInputElement>) =>
 		setInput(e.target.value.trimStart());
@@ -82,16 +93,16 @@ const ChatBox: React.FC<Props> = ({ setChat, user }) => {
 				/>
 			) : (
 				<>
-					<div key="a" id="chat-box">
+					<div id="chat-box" ref={chatBoxRef}>
 						{!messages.length ? (
 							<p className="m-3 text-secondary">Welcome to the chatroom!</p>
 						) : (
-							messages.map(message => (
-								<Message key={message.id} data={message} />
-							))
+							messages
+								.slice(Math.max(messages.length - 30, 0)) // Only show latest 30 messages
+								.map(message => <Message key={message.id} data={message} />)
 						)}
 					</div>
-					<div key="b" id="chat-input" className="bg-secondary p-2">
+					<div id="chat-input" className="bg-secondary p-2">
 						<Form.Control
 							value={input}
 							autoFocus
