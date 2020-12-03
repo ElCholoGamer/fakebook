@@ -43,7 +43,7 @@ const PostSchema = new Schema(
 		content: { type: String, trim: true },
 		image: { type: Boolean, required: true, default: false },
 		likes: { type: Number, required: true, default: 0 },
-		comments: { type: [CommentSchema], required: true, default: [] },
+		comments: { type: [CommentSchema], required: true },
 	},
 	{ timestamps: true }
 );
