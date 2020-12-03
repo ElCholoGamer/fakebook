@@ -10,3 +10,17 @@ render(
 	</BrowserRouter>,
 	document.getElementById('root')
 );
+
+// Register service worker for offline stuff
+if ('serviceWorker' in navigator) {
+	addEventListener('load', () => {
+		navigator.serviceWorker
+			.register('/service-worker.js')
+			.then(registration => {
+				console.log('SW registered: ', registration);
+			})
+			.catch(registrationError => {
+				console.log('SW registration failed: ', registrationError);
+			});
+	});
+}
