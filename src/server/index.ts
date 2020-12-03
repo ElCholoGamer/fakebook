@@ -6,14 +6,18 @@ import session from 'express-session';
 import mongoose from 'mongoose';
 import morgan from 'morgan';
 import passport from 'passport';
+import http from 'http';
+import initPassport from './util/passport';
 import mainRouter from './routes/main';
 import apiRouter from './routes/api';
 import authRouter from './routes/auth';
-import initPassport from './util/passport';
+import initSocket from './util/websocket';
 
 // Initialization
 const app = express();
+const server = http.createServer(app);
 const MongoStore = connectMongo(session);
+
 initPassport();
 
 // Options
@@ -48,6 +52,8 @@ app.use(process.env.TS_NODE_DEV ? express.static('public') : mainRouter);
 app.use('/auth', authRouter);
 app.use('/api', apiRouter);
 
+initSocket(server);
+
 // Connect to database
 console.log('Connecting to database...');
 mongoose
@@ -60,6 +66,6 @@ mongoose
 
 		// Listening
 		const { PORT = 5000 } = process.env;
-		app.listen(PORT, () => console.log(`App listening on port ${PORT}...`));
+		server.listen(PORT, () => console.log(`App listening on port ${PORT}...`));
 	})
 	.catch(console.error);
