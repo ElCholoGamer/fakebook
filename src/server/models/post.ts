@@ -13,8 +13,6 @@ export const AuthorSchema = new Schema({
 interface IComment {
 	author: IAuthor;
 	content: string;
-	createdAt: Date;
-	updatedAt: Date;
 }
 
 const CommentSchema = new Schema(

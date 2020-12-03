@@ -47,6 +47,7 @@ router.get(
 	)
 );
 
+// Get a post's image
 router.get(
 	'/:id/image',
 	asyncHandler(
@@ -181,6 +182,45 @@ router.delete(
 			failStatus: 404,
 		}
 	)
+);
+
+// Post a comment
+router.post(
+	'/:id',
+	checkAuth(),
+	verification(),
+	validator({
+		content: { type: 'string', minLength: 1 },
+	}),
+	asyncHandler(async (req, res) => {
+		const { id } = req.params;
+		const post = await Post.findById(id);
+
+		// Check if post exists
+		if (!post) {
+			return res.status(404).json({
+				status: 404,
+				message: `Post by ID "${id}" not found`,
+			});
+		}
+
+		// Add comment
+		const { content } = req.body;
+		post.comments.push({
+			author: {
+				_id: req.user!.id,
+				username: req.user!.username,
+			},
+			content,
+		});
+		await post.save();
+
+		// Respond with updated post
+		res.json({
+			status: 200,
+			post,
+		});
+	})
 );
 
 export default router;
