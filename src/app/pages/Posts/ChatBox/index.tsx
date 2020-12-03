@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { XCircleFill } from 'react-bootstrap-icons';
 import Form from 'react-bootstrap/Form';
 import './ChatBox.scss';
@@ -8,6 +8,13 @@ interface Props {
 }
 
 const ChatBox: React.FC<Props> = ({ setChat }) => {
+	useEffect(() => {
+		const host =
+			process.env.NODE_ENV === 'development' ? 'localhost:5000' : location.host;
+		const socket = new WebSocket(`ws://${host}/chat`);
+		socket.onopen = () => console.log('WebSocket connected!');
+	}, []);
+
 	return (
 		<div
 			id="chat-wrapper"
