@@ -6,10 +6,9 @@ import Post from '../../models/post';
 import asyncHandler from '../../util/async-handler';
 import multer from 'multer';
 import PostImage from '../../models/post-image';
+import postGetter from '../../middleware/post-getter';
 
 const router = express.Router();
-
-router.use(verification()); // Check that user is verified
 
 // Get all posts
 router.get(
@@ -23,48 +22,25 @@ router.get(
 // Get a post by ID
 router.get(
 	'/:id',
-	asyncHandler(
-		async (req, res) => {
-			const { id } = req.params;
-			const post = await Post.findById(id);
-
-			if (!post) {
-				res.status(404).json({
-					status: 404,
-					message: `Post by ID "${id}" not found`,
-				});
-			} else {
-				res.json({
-					status: 200,
-					post,
-				});
-			}
-		},
-		{
-			silent: true,
-			failStatus: 400,
-		}
-	)
+	postGetter(),
+	asyncHandler(async (req, res) => {
+		res.json({
+			status: 200,
+			post: req.post,
+		});
+	})
 );
 
 // Get a post's image
 router.get(
 	'/:id/image',
+	postGetter(),
 	asyncHandler(
 		async (req, res) => {
-			const { id } = req.params;
-			const post = await Post.findById(id);
-
-			// Check if post exists
-			if (!post) {
-				return res.status(404).json({
-					status: 404,
-					message: `Post by ID "${id}" not found`,
-				});
-			}
+			const { post } = req;
 
 			// Check if post has image
-			if (!post.image) {
+			if (!post!.image) {
 				return res.status(404).json({
 					status: 404,
 					message: "Post doesn't have an image",
@@ -72,7 +48,7 @@ router.get(
 			}
 
 			// Get post image
-			const image = await PostImage.findById(id);
+			const image = await PostImage.findById(post!._id);
 			if (!image) {
 				return res.status(404).json({
 					status: 404,
@@ -90,12 +66,13 @@ router.get(
 	)
 );
 
+router.use(checkAuth());
+router.use(verification());
+
 // Upload a new post
 const upload = multer();
 router.post(
 	'/',
-	checkAuth(),
-	verification(),
 	upload.single('image'),
 	validator({
 		title: { type: 'string', minLength: 1 },
@@ -150,28 +127,19 @@ router.post(
 // Delete a post by ID
 router.delete(
 	'/:id',
-	checkAuth(),
-	verification(),
+	postGetter(),
 	asyncHandler(
 		async (req, res) => {
-			const { id } = req.params;
-			const post = await Post.findById(id);
+			const { post } = req;
 
-			if (!post) {
-				return res.status(404).json({
-					status: 404,
-					message: `Post by ID "${id}" not found`,
-				});
-			}
-
-			if (post.author._id.toHexString() !== req.user!._id.toString()) {
+			if (post!.author._id.toString() !== req.user!._id.toString()) {
 				return res.status(401).json({
 					status: 401,
 					message: 'User is unauthorized',
 				});
 			}
 
-			await post.deleteOne();
+			await post!.deleteOne();
 			res.json({
 				status: 200,
 				message: 'Post deleted successfully',
@@ -187,40 +155,36 @@ router.delete(
 // Post a comment
 router.post(
 	'/:id',
-	checkAuth(),
-	verification(),
 	validator({
 		content: { type: 'string', minLength: 1 },
 	}),
-	asyncHandler(async (req, res) => {
-		const { id } = req.params;
-		const post = await Post.findById(id);
+	postGetter(),
+	asyncHandler(
+		async (req, res) => {
+			const { post } = req;
 
-		// Check if post exists
-		if (!post) {
-			return res.status(404).json({
-				status: 404,
-				message: `Post by ID "${id}" not found`,
+			// Add comment
+			const { content } = req.body;
+			post!.comments.push({
+				author: {
+					_id: req.user!.id,
+					username: req.user!.username,
+				},
+				content,
 			});
+			await post!.save();
+
+			// Respond with updated post
+			res.json({
+				status: 200,
+				post,
+			});
+		},
+		{
+			silent: true,
+			failStatus: 404,
 		}
-
-		// Add comment
-		const { content } = req.body;
-		post.comments.push({
-			author: {
-				_id: req.user!.id,
-				username: req.user!.username,
-			},
-			content,
-		});
-		await post.save();
-
-		// Respond with updated post
-		res.json({
-			status: 200,
-			post,
-		});
-	})
+	)
 );
 
 export default router;

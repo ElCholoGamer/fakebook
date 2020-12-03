@@ -23,7 +23,7 @@ const CommentSchema = new Schema(
 	{ timestamps: true }
 );
 
-interface IPost extends Document {
+export interface IPost extends Document {
 	title: string;
 	author: IAuthor;
 	content?: string;
