@@ -1,11 +1,11 @@
 import { Schema, model, Document, Types } from 'mongoose';
 
-interface IAuthor {
+export interface IAuthor {
 	_id: Types.ObjectId;
 	username: string;
 }
 
-const AuthorSchema = new Schema({
+export const AuthorSchema = new Schema({
 	_id: { type: Types.ObjectId, required: true },
 	username: { type: String, required: true },
 });
