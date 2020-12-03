@@ -5,7 +5,7 @@ import verification from '../../middleware/verification';
 import Post from '../../models/post';
 import asyncHandler from '../../util/async-handler';
 import multer from 'multer';
-import PostPicture from '../../models/post-picture';
+import PostImage from '../../models/post-image';
 
 const router = express.Router();
 
@@ -43,6 +43,48 @@ router.get(
 		{
 			silent: true,
 			failStatus: 400,
+		}
+	)
+);
+
+router.get(
+	'/:id/image',
+	asyncHandler(
+		async (req, res) => {
+			const { id } = req.params;
+			const post = await Post.findById(id);
+
+			// Check if post exists
+			if (!post) {
+				return res.status(404).json({
+					status: 404,
+					message: `Post by ID "${id}" not found`,
+				});
+			}
+
+			// Check if post has image
+			if (!post.image) {
+				return res.status(404).json({
+					status: 404,
+					message: "Post doesn't have an image",
+				});
+			}
+
+			// Get post image
+			const image = await PostImage.findById(id);
+			if (!image) {
+				return res.status(404).json({
+					status: 404,
+					message: 'Image not foundx',
+				});
+			}
+
+			// Get values and send response
+			const { data, contentType } = image;
+			res.contentType(contentType).send(data);
+		},
+		{
+			silent: true,
 		}
 	)
 );
@@ -89,7 +131,7 @@ router.post(
 			}
 
 			// Create and save image document
-			const picture = new PostPicture({
+			const picture = new PostImage({
 				_id: post._id,
 				data: buffer,
 				contentType: mimetype,
