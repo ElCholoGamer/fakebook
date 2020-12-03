@@ -16,6 +16,9 @@ const config = merge(common, {
 			clientsClaim: true,
 			skipWaiting: true,
 		}),
+		new webpack.DefinePlugin({
+			'process.env.NODE_ENV': 'production',
+		}),
 	],
 });
 

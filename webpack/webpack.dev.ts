@@ -23,7 +23,13 @@ const config = merge(common, {
 			} as any,
 		},
 	},
-	plugins: [new webpack.HotModuleReplacementPlugin(), new EslintPlugin()],
+	plugins: [
+		new webpack.HotModuleReplacementPlugin(),
+		new EslintPlugin(),
+		new webpack.DefinePlugin({
+			'process.env.NODE_ENV': JSON.stringify('development'),
+		}),
+	],
 });
 
 export default config;
