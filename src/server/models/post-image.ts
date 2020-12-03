@@ -1,6 +1,6 @@
 import { Schema, model, Document } from 'mongoose';
 
-interface IPostPicture extends Document {
+interface IPostImage extends Document {
 	data: Buffer;
 	contentType: string;
 }
@@ -10,6 +10,6 @@ const PostPictureSchema = new Schema({
 	contentType: { type: String, required: true },
 });
 
-const PostPicture = model<IPostPicture>('PostPicture', PostPictureSchema);
+const PostImage = model<IPostImage>('PostPicture', PostPictureSchema);
 
-export default PostPicture;
+export default PostImage;
