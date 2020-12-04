@@ -51,15 +51,18 @@ router.put(
 	'/',
 	checkAuth(),
 	verification(),
-	validator({
-		username: { type: 'string', required: false, minLength: 1 },
-		bio: { type: 'string', required: false },
-	}),
+	validator(
+		{
+			username: { type: 'string', required: false, minLength: 1 },
+			bio: { type: 'string', required: false },
+		},
+		{ allowOther: true }
+	),
 	asyncHandler(async (req, res) => {
 		const { bio = req.user!.bio, username = req.user!.username } = req.body;
 
-		req.user!.username = username;
-		req.user!.bio = bio;
+		req.user!.username = username.trim();
+		req.user!.bio = bio.trim();
 		await req.user!.save();
 
 		res.json({

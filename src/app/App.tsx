@@ -5,14 +5,15 @@ import Loading from './components/Loading';
 import { User } from './utils';
 
 const Header = lazy(() => import('./components/Header'));
+const CookiesFooter = lazy(() => import('./components/CookiesFooter'));
 const Home = lazy(() => import('./pages/Home'));
 const Login = lazy(() => import('./pages/Login'));
 const Register = lazy(() => import('./pages/Register'));
 const Posts = lazy(() => import('./pages/Posts'));
 const Account = lazy(() => import('./pages/Account'));
+const EditAccount = lazy(() => import('./pages/Account/EditAccount'));
 const AddPost = lazy(() => import('./pages/Posts/AddPost'));
 const VerifySuccess = lazy(() => import('./pages/VerifySuccess'));
-const CookiesFooter = lazy(() => import('./components/CookiesFooter'));
 
 const App: React.FC = () => {
 	const [user, setUser] = useState<User | null>(null);
@@ -45,6 +46,11 @@ const App: React.FC = () => {
 				<Route exact path="/posts" children={<Posts user={user} />} />
 				<Route exact path="/posts/add" component={AddPost} />
 				<Route exact path="/account" children={<Account user={user} />} />
+				<Route
+					exact
+					path="/account/edit"
+					children={<EditAccount user={user} />}
+				/>
 				<Route exact path="/verify-success" component={VerifySuccess} />
 
 				<Redirect to="/" />

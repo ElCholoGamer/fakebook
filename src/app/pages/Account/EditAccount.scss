@@ -1,0 +1,12 @@
+#user-avatar {
+	cursor: pointer;
+	transition: filter 200ms ease-in-out;
+
+	&:hover {
+		filter: brightness(90%);
+	}
+
+	&:active {
+		filter: brightness(80%);
+	}
+}
