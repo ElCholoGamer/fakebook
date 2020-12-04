@@ -3,11 +3,13 @@ import Alert from 'react-bootstrap/Alert';
 import Button from 'react-bootstrap/Button';
 import { Link, Redirect, useRouteMatch } from 'react-router-dom';
 import { User } from '../../utils';
+import { Remarkable } from 'remarkable';
 
 interface Props {
 	user: User | null;
 }
 
+const md = new Remarkable();
 const Account: React.FC<Props> = ({ user }) => {
 	const match = useRouteMatch();
 	if (!user) return <Redirect to="/login" />;
@@ -33,7 +35,12 @@ const Account: React.FC<Props> = ({ user }) => {
 			<span className="font-weight-bold">Username:</span> {user.username}
 			<br />
 			<span className="font-weight-bold">Email:</span> {user.email}
-			<br />
+			<h4>Your bio:</h4>
+			<p
+				className="bg-light border pt-3 px-3 border-secondary rounded"
+				dangerouslySetInnerHTML={{
+					__html: md.render(user.bio || '*bruh you dont have a bio*'),
+				}}></p>
 			<Button
 				as={Link}
 				className="mt-4"

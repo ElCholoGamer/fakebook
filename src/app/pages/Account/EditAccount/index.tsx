@@ -105,7 +105,7 @@ const EditAccount: React.FC<Props> = ({ user }) => {
 					setData={setInput}
 					label="Bio"
 					value="bio"
-					placeholder="Something interesting idk"
+					placeholder="Something interesting idk (You can use Markdown :D)"
 				/>
 
 				<Button
