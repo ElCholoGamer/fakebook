@@ -12,7 +12,11 @@ router.get('*', (req, res, next) => {
 		headers: { accept = '' },
 	} = req;
 
-	if (method === 'GET' && accept.indexOf('text/html') !== -1) {
+	if (
+		method === 'GET' &&
+		accept.indexOf('text/html') !== -1 &&
+		!req.path.startsWith('/api')
+	) {
 		res.sendFile(join(BUILD, 'index.html'));
 	} else {
 		next();
