@@ -1,0 +1,16 @@
+{
+	"name": "Fakebook",
+	"short_name": "Fakebook",
+	"description": "The social network absolutely no one asked for",
+	"icons": [
+		{
+			"src": "/favicon.ico",
+			"sizes": "64x64",
+			"type": "image/ico"
+		}
+	],
+	"start_url": "/index.html",
+	"display": "fullscreen",
+	"theme_color": "#4f92ff",
+	"background_color": "#345891"
+}
