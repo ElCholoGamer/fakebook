@@ -108,9 +108,13 @@ const ChatBox: React.FC<Props> = ({ setChat, user }) => {
 							autoFocus
 							onChange={handleChange}
 							onKeyDown={handleKeyDown}
-							disabled={!user}
+							disabled={!user?.verified}
 							placeholder={
-								user ? 'Say something lol' : 'Log in to talk in the chat lmao'
+								!user
+									? 'Log in to talk in the chat!'
+									: !user.verified
+									? 'You gotta verify your account bruh'
+									: 'Say something lol'
 							}
 						/>
 					</div>
