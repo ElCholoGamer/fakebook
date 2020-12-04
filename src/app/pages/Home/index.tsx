@@ -1,6 +1,7 @@
 import React from 'react';
 import Button from 'react-bootstrap/Button';
 import Col from 'react-bootstrap/Col';
+import { Link } from 'react-router-dom';
 import { User } from '../../utils';
 import './Home.scss';
 
@@ -25,7 +26,7 @@ const Home: React.FC<Props> = ({ user }) => (
 					The tremendously vague social network absolutely no one asked for
 				</p>
 				{user && (
-					<Button variant="info" href="/posts">
+					<Button as={Link} variant="info" to="/posts">
 						Go to Posts
 					</Button>
 				)}

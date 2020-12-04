@@ -10,6 +10,7 @@ import NavLink from 'react-bootstrap/NavLink';
 import { PencilFill } from 'react-bootstrap-icons';
 import Dropdown from 'react-bootstrap/Dropdown';
 import './Header.scss';
+import { Link } from 'react-router-dom';
 
 interface Props {
 	user: User | null;
@@ -89,10 +90,10 @@ const Header: React.FC<Props> = ({ user }) => {
 						</Navbar.Text>
 					) : (
 						<ButtonGroup>
-							<Button variant="primary" href="/login">
+							<Button variant="primary" as={Link} to="/login">
 								Log In
 							</Button>
-							<Button variant="primary" href="/register">
+							<Button variant="primary" as={Link} to="/register">
 								Register
 							</Button>
 						</ButtonGroup>
