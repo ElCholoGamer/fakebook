@@ -5,8 +5,8 @@ import Form from 'react-bootstrap/Form';
 import FormRow from '../../../components/FormRow';
 import './EditAccount.scss';
 import axios, { AxiosError } from 'axios';
-import Alert from 'react-bootstrap/esm/Alert';
-import Button from 'react-bootstrap/esm/Button';
+import Alert from 'react-bootstrap/Alert';
+import Button from 'react-bootstrap/Button';
 
 interface Props {
 	user: User | null;

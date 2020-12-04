@@ -1,6 +1,6 @@
 import React from 'react';
-import Alert from 'react-bootstrap/esm/Alert';
-import Button from 'react-bootstrap/esm/Button';
+import Alert from 'react-bootstrap/Alert';
+import Button from 'react-bootstrap/Button';
 import { Link, Redirect, useRouteMatch } from 'react-router-dom';
 import { User } from '../../utils';
 
