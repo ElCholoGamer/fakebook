@@ -1,8 +1,8 @@
 import React, { useRef, useState } from 'react';
 import { Redirect } from 'react-router-dom';
-import { objectsEqual, User } from '../../utils';
+import { objectsEqual, User } from '../../../utils';
 import Form from 'react-bootstrap/Form';
-import FormRow from '../../components/FormRow';
+import FormRow from '../../../components/FormRow';
 import './EditAccount.scss';
 import axios, { AxiosError } from 'axios';
 import Alert from 'react-bootstrap/esm/Alert';
@@ -12,7 +12,7 @@ interface Props {
 	user: User | null;
 }
 
-const accept = ['png', 'jpeg'];
+const accept = ['png', 'jpg', 'jpeg'];
 
 const EditAccount: React.FC<Props> = ({ user }) => {
 	const inputRef = useRef<HTMLInputElement>(null);
@@ -26,6 +26,14 @@ const EditAccount: React.FC<Props> = ({ user }) => {
 	const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
 		const { files } = e.target;
 		if (!files?.length) return;
+
+		const [type, ext] = files[0].type.split('/');
+		if (type !== 'image' || !accept.includes(ext.toLowerCase())) {
+			const extensions = accept.join(', ');
+			return setAlert(
+				`File must be an image from any of the following types: ${extensions}`
+			);
+		}
 
 		const form = new FormData();
 		form.append('avatar', files[0]);
