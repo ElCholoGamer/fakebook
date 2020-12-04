@@ -60,7 +60,7 @@ const ChatBox: React.FC<Props> = ({ setChat, user }) => {
 		setInput(e.target.value.trimStart());
 
 	const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
-		if (e.key !== 'Enter' || !socket || !user) return;
+		if (e.key !== 'Enter' || !socket || !user || !input) return;
 		setInput('');
 
 		const data = {
@@ -68,7 +68,7 @@ const ChatBox: React.FC<Props> = ({ setChat, user }) => {
 				_id: user._id.toString(),
 				username: user.username,
 			},
-			content: input,
+			content: input.trim(),
 		};
 		socket?.send(JSON.stringify(data));
 	};
@@ -99,7 +99,9 @@ const ChatBox: React.FC<Props> = ({ setChat, user }) => {
 						) : (
 							messages
 								.slice(Math.max(messages.length - 30, 0)) // Only show latest 30 messages
-								.map(message => <Message key={message.id} data={message} />)
+								.map(message => (
+									<Message key={message.id} user={user} data={message} />
+								))
 						)}
 					</div>
 					<div id="chat-input" className="bg-secondary p-2">
