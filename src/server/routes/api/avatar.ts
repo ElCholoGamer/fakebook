@@ -85,6 +85,11 @@ router.put(
 		avatar.contentType = mimetype;
 		await avatar.save();
 
+		if (!req.user!.avatar) {
+			req.user!.avatar = true;
+			await req.user!.save();
+		}
+
 		res.json({
 			status: 200,
 			message: 'Avatar updated successfully',
@@ -107,6 +112,9 @@ router.delete(
 		}
 
 		await avatar.deleteOne();
+		req.user!.avatar = false;
+		await req.user!.save();
+
 		res.json({
 			status: 200,
 			message: 'Avatar deleted successfully',

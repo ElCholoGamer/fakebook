@@ -4,6 +4,7 @@ export interface User {
 	bio: string;
 	verified: boolean;
 	email: string;
+	avatar: boolean;
 }
 
 export interface ChatMessage {

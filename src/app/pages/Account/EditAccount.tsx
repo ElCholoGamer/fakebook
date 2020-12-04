@@ -118,7 +118,11 @@ const EditAccount: React.FC<Props> = ({ user }) => {
 				className="rounded-circle"
 			/>
 			<br />
-			<Button onClick={removeAvatar} className="mt-3" variant="outline-danger">
+			<Button
+				disabled={!user.avatar}
+				onClick={removeAvatar}
+				className="mt-3"
+				variant="outline-danger">
 				Remove Avatar
 			</Button>
 

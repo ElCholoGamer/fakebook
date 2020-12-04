@@ -7,6 +7,7 @@ export interface IUser extends Document {
 	password: string;
 	email: string;
 	bio?: string;
+	avatar: boolean;
 	verified: boolean;
 	code?: string;
 	comparePassword(password: string): Promise<boolean>;
@@ -19,6 +20,7 @@ const UserSchema = new Schema({
 	password: { type: String, required: true, minlength: 4 },
 	email: { type: String, required: true, trim: true },
 	bio: String,
+	avatar: { type: Boolean, required: true, default: false },
 	verified: { type: Boolean, required: true, default: false },
 	code: String,
 });
