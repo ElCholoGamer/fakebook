@@ -106,6 +106,7 @@ const EditAccount: React.FC<Props> = ({ user }) => {
 					label="Bio"
 					value="bio"
 					placeholder="Something interesting idk (You can use Markdown :D)"
+					rows={8}
 				/>
 
 				<Button

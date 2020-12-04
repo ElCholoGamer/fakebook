@@ -14,6 +14,7 @@ interface Props<T extends Record<string, any>> {
 	disabled?: boolean;
 	footer?: string;
 	transformer?(str: string): string;
+	rows?: number;
 }
 
 const FormRow = <T extends Record<string, any>>({
@@ -27,23 +28,45 @@ const FormRow = <T extends Record<string, any>>({
 	disabled,
 	footer,
 	transformer = str => str,
+	rows,
 }: Props<T>) => {
 	return (
 		<Form.Group as={Row}>
 			<Form.Label column>{label}</Form.Label>
 			<Col sm={10}>
-				<Form.Control
-					autoFocus={autoFocus}
-					as={type === 'textarea' ? type : 'input'}
-					value={data[value]}
-					name="email"
-					disabled={disabled}
-					onChange={e =>
-						setData(prev => ({ ...prev, [value]: transformer(e.target.value) }))
-					}
-					type={type}
-					placeholder={placeholder}
-				/>
+				{type !== 'textarea' ? (
+					<Form.Control
+						autoFocus={autoFocus}
+						value={data[value]}
+						name="email"
+						disabled={disabled}
+						onChange={e =>
+							setData(prev => ({
+								...prev,
+								[value]: transformer(e.target.value),
+							}))
+						}
+						type={type}
+						placeholder={placeholder}
+					/>
+				) : (
+					<Form.Control
+						as="textarea"
+						rows={rows}
+						autoFocus={autoFocus}
+						value={data[value]}
+						name="email"
+						disabled={disabled}
+						onChange={e =>
+							setData(prev => ({
+								...prev,
+								[value]: transformer(e.target.value),
+							}))
+						}
+						type={type}
+						placeholder={placeholder}
+					/>
+				)}
 				{footer && <Form.Text className="text-muted">{footer}</Form.Text>}
 			</Col>
 		</Form.Group>
