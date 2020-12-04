@@ -1,5 +1,5 @@
+import React, { lazy, useState, useEffect, Suspense } from 'react';
 import axios from 'axios';
-import React, { lazy, useState, useEffect } from 'react';
 import { Redirect, Route, Switch } from 'react-router-dom';
 import Loading from './components/Loading';
 import { User } from './utils';
@@ -36,7 +36,7 @@ const App: React.FC = () => {
 	if (!loaded) return <Loading />;
 
 	return (
-		<React.Suspense fallback={<Loading />}>
+		<Suspense fallback={<Loading />}>
 			<Header user={user} />
 			<Switch>
 				<Route exact path="/" children={<Home user={user} />} />
@@ -50,7 +50,7 @@ const App: React.FC = () => {
 				<Redirect to="/" />
 			</Switch>
 			<CookiesFooter />
-		</React.Suspense>
+		</Suspense>
 	);
 };
 
