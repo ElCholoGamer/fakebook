@@ -21,7 +21,7 @@ const MongoStore = connectMongo(session);
 initPassport();
 
 // Options
-app.enabled('trust proxy');
+app.enable('trust proxy');
 app.set('json replacer', (key: string, val: any) =>
 	['password', 'code'].includes(key) ? undefined : val
 );
