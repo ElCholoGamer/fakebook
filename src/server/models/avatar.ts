@@ -1,6 +1,7 @@
-import { Document, model, Schema } from 'mongoose';
+import { Document, model, Schema, Types } from 'mongoose';
 
 export interface IAvatar extends Document {
+	_id: Types.ObjectId;
 	data: Buffer;
 	contentType: string;
 }

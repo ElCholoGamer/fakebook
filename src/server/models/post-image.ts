@@ -1,6 +1,7 @@
-import { Schema, model, Document } from 'mongoose';
+import { Schema, model, Document, Types } from 'mongoose';
 
 interface IPostImage extends Document {
+	_id: Types.ObjectId;
 	data: Buffer;
 	contentType: string;
 }

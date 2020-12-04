@@ -1,8 +1,9 @@
 import { compare, hash } from 'bcrypt';
-import { Document, model, Schema } from 'mongoose';
+import { Document, model, Schema, Types } from 'mongoose';
 import Avatar, { IAvatar } from './avatar';
 
 export interface IUser extends Document {
+	_id: Types.ObjectId;
 	username: string;
 	password: string;
 	email: string;

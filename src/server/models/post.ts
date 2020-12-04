@@ -24,6 +24,7 @@ const CommentSchema = new Schema(
 );
 
 export interface IPost extends Document {
+	_id: Types.ObjectId;
 	title: string;
 	author: IAuthor;
 	content?: string;
