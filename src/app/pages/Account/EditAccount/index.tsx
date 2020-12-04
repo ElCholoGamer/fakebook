@@ -64,7 +64,7 @@ const EditAccount: React.FC<Props> = ({ user }) => {
 
 		axios
 			.put('/api/user', input)
-			.then(() => location.reload())
+			.then(() => (location.href = '/account'))
 			.catch((err: AxiosError) => {
 				currentTarget.disabled = false;
 				console.error(err);
