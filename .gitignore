@@ -3,6 +3,4 @@
 /build
 
 .env*
-yarn-error.log
-/requests.http
-/img.png
+yarn-error.log*
