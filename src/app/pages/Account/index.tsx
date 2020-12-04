@@ -35,7 +35,7 @@ const Account: React.FC<Props> = ({ user }) => {
 			<span className="font-weight-bold">Username:</span> {user.username}
 			<br />
 			<span className="font-weight-bold">Email:</span> {user.email}
-			<h4>Your bio:</h4>
+			<h5 className="mt-3">Your bio:</h5>
 			<p
 				className="bg-light border pt-3 px-3 border-secondary rounded"
 				dangerouslySetInnerHTML={{
