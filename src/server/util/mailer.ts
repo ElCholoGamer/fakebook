@@ -18,8 +18,15 @@ const sendCode = (to: string, code: string) =>
 		const options: Mail.Options = {
 			from: MAILER_EMAIL,
 			to,
-			subject: 'Your Fakebook code',
-			html: template.replace(/%CODE%/g, code),
+			subject: 'Verify your Fakebook account',
+			html: template.replace(
+				/%URL%/g,
+				`http${
+					process.env.TS_NODE_DEV
+						? '://localhost:5000'
+						: 's://elchologamer-fakebook.herokuapp.com'
+				}/api/verify?code=${code}`
+			),
 		};
 
 		transporter.sendMail(options, (err, info) => {
