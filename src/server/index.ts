@@ -26,10 +26,12 @@ app.set('json replacer', (key: string, val: any) =>
 	['password', 'code'].includes(key) ? undefined : val
 );
 
+const { TS_NODE_DEV } = process.env;
+
 // Middleware
 app.use(cors());
 app.use(express.json());
-app.use(morgan('common'));
+if (TS_NODE_DEV) app.use(morgan('common'));
 
 // Session middleware
 app.use(
@@ -46,7 +48,7 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 // Either static files or main router
-app.use(process.env.TS_NODE_DEV ? express.static('public') : mainRouter);
+app.use(TS_NODE_DEV ? express.static('public') : mainRouter);
 
 // Routes
 app.use('/auth', authRouter);
