@@ -5,6 +5,7 @@ import validator from '../../../middleware/validator';
 import verification from '../../../middleware/verification';
 import PostImage from '../../../models/post-image';
 import asyncHandler from '../../../util/async-handler';
+import { Types } from 'mongoose';
 
 const router = express.Router({ mergeParams: true });
 
@@ -96,16 +97,15 @@ router.post(
 	postGetter(),
 	asyncHandler(
 		async (req, res) => {
-			const { post } = req;
-			const { content } = req.body;
+			const { post, body } = req;
 
 			// Add comment
 			post!.comments.push({
 				author: {
-					_id: req.user!.id,
+					_id: Types.ObjectId(req.user!.id),
 					username: req.user!.username,
 				},
-				content,
+				content: body.content,
 			});
 
 			// Respond with updated post
@@ -130,7 +130,7 @@ router.put(
 		const { post } = req;
 
 		// Remove like first
-		const prev = [...post!.likes];
+		const prev = [...post!.likes]; // Clones the array
 		post!.likes = post!.likes.filter(
 			id => id.toString() !== req.user!._id.toString()
 		);

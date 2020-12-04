@@ -65,7 +65,7 @@ const ChatBox: React.FC<Props> = ({ setChat, user }) => {
 
 		const data = {
 			author: {
-				_id: user._id.toString(),
+				_id: user._id,
 				username: user.username,
 			},
 			content: input.trim(),
