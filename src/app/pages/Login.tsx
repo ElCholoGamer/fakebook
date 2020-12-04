@@ -11,7 +11,7 @@ const Login: React.FC = () => {
 	const [message, setMessage] = useState('');
 	const [data, setData] = useState({ email: '', password: '' });
 
-	if (localStorage.getItem('loggedIn') === 'yes') history.push('/');
+	if (localStorage.getItem('loggedIn') === 'yes') history.push('/account');
 
 	const handleClick = ({
 		currentTarget,

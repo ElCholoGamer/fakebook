@@ -16,7 +16,7 @@ const Register: React.FC = () => {
 		password2: '',
 	});
 
-	if (localStorage.getItem('loggedIn') === 'yes') history.push('/');
+	if (localStorage.getItem('loggedIn') === 'yes') history.push('/account');
 
 	const handleClick = ({
 		currentTarget,
@@ -32,7 +32,7 @@ const Register: React.FC = () => {
 			.post('/auth/register', { username, email, password: password1 })
 			.then(() => {
 				localStorage.setItem('loggedIn', 'yes');
-				location.href = '/';
+				location.href = '/account';
 			})
 			.catch((err: AxiosError) => {
 				console.error(err);
