@@ -19,14 +19,15 @@ const App: React.FC = () => {
 	const [user, setUser] = useState<User | null>(null);
 	const [loaded, setLoaded] = useState(false);
 
+	const fetchUser = () =>
+		axios.get('/api/user').then(res => setUser(res.data.user));
+
 	useEffect(() => {
 		if (localStorage.getItem('loggedIn') !== 'yes') {
 			return setLoaded(true);
 		}
 
-		axios
-			.get('/api/user')
-			.then(res => setUser(res.data.user))
+		fetchUser()
 			.catch(err => {
 				localStorage.removeItem('loggedIn');
 				console.error(err);
@@ -41,15 +42,19 @@ const App: React.FC = () => {
 			<Header user={user} />
 			<Switch>
 				<Route exact path="/" children={<Home user={user} />} />
-				<Route exact path="/login" component={Login} />
-				<Route exact path="/register" component={Register} />
+				<Route exact path="/login" children={<Login fetchUser={fetchUser} />} />
+				<Route
+					exact
+					path="/register"
+					children={<Register fetchUser={fetchUser} />}
+				/>
 				<Route exact path="/posts" children={<Posts user={user} />} />
 				<Route exact path="/posts/add" component={AddPost} />
 				<Route exact path="/account" children={<Account user={user} />} />
 				<Route
 					exact
 					path="/account/edit"
-					children={<EditAccount user={user} />}
+					children={<EditAccount fetchUser={fetchUser} user={user} />}
 				/>
 				<Route exact path="/verify-success" component={VerifySuccess} />
 

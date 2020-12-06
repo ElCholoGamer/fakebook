@@ -1,5 +1,5 @@
 import React, { useRef, useState } from 'react';
-import { Redirect } from 'react-router-dom';
+import { Redirect, useHistory } from 'react-router-dom';
 import { objectsEqual, User } from '../../../utils';
 import Form from 'react-bootstrap/Form';
 import FormRow from '../../../components/FormRow';
@@ -10,11 +10,13 @@ import Button from 'react-bootstrap/Button';
 
 interface Props {
 	user: User | null;
+	fetchUser(): Promise<void>;
 }
 
 const accept = ['png', 'jpg', 'jpeg'];
 
-const EditAccount: React.FC<Props> = ({ user }) => {
+const EditAccount: React.FC<Props> = ({ user, fetchUser }) => {
+	const history = useHistory();
 	const inputRef = useRef<HTMLInputElement>(null);
 	const [input, setInput] = useState({ ...user! });
 	const [alert, setAlert] = useState('');
@@ -37,6 +39,7 @@ const EditAccount: React.FC<Props> = ({ user }) => {
 
 		const form = new FormData();
 		form.append('avatar', files[0]);
+
 		axios
 			.put('/api/avatar', form, {
 				headers: { 'Content-Type': 'multipart/form-data' },
@@ -51,7 +54,7 @@ const EditAccount: React.FC<Props> = ({ user }) => {
 	const removeAvatar = () => {
 		axios
 			.delete('/api/avatar')
-			.then(() => location.reload())
+			.then(fetchUser)
 			.catch((err: AxiosError) => {
 				console.error(err);
 				setAlert(err.response?.data?.message);
@@ -64,7 +67,8 @@ const EditAccount: React.FC<Props> = ({ user }) => {
 
 		axios
 			.put('/api/user', input)
-			.then(() => (location.href = '/account'))
+			.then(fetchUser)
+			.then(() => history.push('/account'))
 			.catch((err: AxiosError) => {
 				currentTarget.disabled = false;
 				console.error(err);

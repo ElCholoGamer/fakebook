@@ -3,10 +3,14 @@ import React, { useState } from 'react';
 import Alert from 'react-bootstrap/Alert';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
-import { useHistory } from 'react-router-dom';
+import { Redirect, useHistory } from 'react-router-dom';
 import FormRow from '../components/FormRow';
 
-const Register: React.FC = () => {
+interface Props {
+	fetchUser(): Promise<void>;
+}
+
+const Register: React.FC<Props> = ({ fetchUser }) => {
 	const history = useHistory();
 	const [message, setMessage] = useState('');
 	const [data, setData] = useState({
@@ -16,7 +20,8 @@ const Register: React.FC = () => {
 		password2: '',
 	});
 
-	if (localStorage.getItem('loggedIn') === 'yes') history.push('/account');
+	if (localStorage.getItem('loggedIn') === 'yes')
+		return <Redirect to="/account" />;
 
 	const handleClick = ({
 		currentTarget,
@@ -32,8 +37,9 @@ const Register: React.FC = () => {
 			.post('/auth/register', { username, email, password: password1 })
 			.then(() => {
 				localStorage.setItem('loggedIn', 'yes');
-				location.href = '/account';
+				return fetchUser();
 			})
+			.then(() => history.push('/account'))
 			.catch((err: AxiosError) => {
 				console.error(err);
 				setMessage(err.response?.data?.message);

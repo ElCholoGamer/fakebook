@@ -6,7 +6,11 @@ import Form from 'react-bootstrap/Form';
 import { useHistory } from 'react-router-dom';
 import FormRow from '../components/FormRow';
 
-const Login: React.FC = () => {
+interface Props {
+	fetchUser(): Promise<void>;
+}
+
+const Login: React.FC<Props> = ({ fetchUser }) => {
 	const history = useHistory();
 	const [message, setMessage] = useState('');
 	const [data, setData] = useState({ email: '', password: '' });
@@ -21,7 +25,7 @@ const Login: React.FC = () => {
 			.post('/auth/login', data)
 			.then(() => {
 				localStorage.setItem('loggedIn', 'yes');
-				location.href = '/posts';
+				fetchUser().then(() => history.push('/posts'));
 			})
 			.catch((err: AxiosError) => {
 				console.error(err);
@@ -43,7 +47,7 @@ const Login: React.FC = () => {
 					setData={setData}
 					value="email"
 					type="email"
-					placeholder="Your email..."
+					placeholder="Your email"
 					label="Email"
 				/>
 
@@ -52,7 +56,7 @@ const Login: React.FC = () => {
 					setData={setData}
 					value="password"
 					type="password"
-					placeholder="Your password..."
+					placeholder="Your password"
 					label="Password"
 				/>
 

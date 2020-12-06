@@ -14,10 +14,7 @@ import { Link } from 'react-router-dom';
 
 interface Props {
 	user: User | null;
-}
-
-interface RefProps {
-	onClick(e: React.MouseEvent<HTMLSpanElement, MouseEvent>): void;
+	fetchUser(): Promise<void>;
 }
 
 /**
@@ -25,7 +22,7 @@ interface RefProps {
  * but apparently this thing works.
  */
 // eslint-disable-next-line react/display-name
-const CustomToggle = forwardRef<HTMLSpanElement, RefProps>(
+const CustomToggle = forwardRef<HTMLSpanElement, React.ComponentProps<'span'>>(
 	({ children, onClick }, ref) => (
 		<span
 			id="account-toggle"
@@ -43,14 +40,14 @@ const CustomToggle = forwardRef<HTMLSpanElement, RefProps>(
 	)
 );
 
-const Header: React.FC<Props> = ({ user }) => {
+const Header: React.FC<Props> = ({ user, fetchUser }) => {
 	const handleClick = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
 		e.currentTarget.disabled = true;
 		axios
 			.post('/auth/logout')
 			.then(() => {
 				localStorage.removeItem('loggedIn');
-				location.reload();
+				return fetchUser();
 			})
 			.catch(console.error);
 	};
@@ -81,7 +78,9 @@ const Header: React.FC<Props> = ({ user }) => {
 								</Dropdown.Toggle>
 
 								<Dropdown.Menu className="bg-dark">
-									<Dropdown.Item href="/account">My Account</Dropdown.Item>
+									<Dropdown.Item as={Link} to="/account">
+										My Account
+									</Dropdown.Item>
 									<Dropdown.Item className="text-danger" onClick={handleClick}>
 										Log Out
 									</Dropdown.Item>
