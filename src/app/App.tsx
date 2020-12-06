@@ -39,7 +39,7 @@ const App: React.FC = () => {
 
 	return (
 		<Suspense fallback={<Loading />}>
-			<Header user={user} />
+			<Header fetchUser={fetchUser} user={user} />
 			<Switch>
 				<Route exact path="/" children={<Home user={user} />} />
 				<Route exact path="/login" children={<Login fetchUser={fetchUser} />} />
