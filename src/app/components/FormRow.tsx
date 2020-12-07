@@ -33,7 +33,6 @@ const FormRow = <T extends Record<string, any>>({
 	const props = {
 		autoFocus,
 		value: data[value],
-		name: 'email',
 		disabled,
 		onChange: ({ target }: React.ChangeEvent<HTMLInputElement>) =>
 			setData(prev => ({
@@ -43,9 +42,9 @@ const FormRow = <T extends Record<string, any>>({
 						? target.checked
 						: transformer(target.value),
 			})),
-
 		type,
 		placeholder,
+		name: value.toString(),
 	};
 	return (
 		<Form.Group as={Row}>

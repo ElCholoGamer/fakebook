@@ -7,12 +7,27 @@ export interface User {
 	avatar: boolean;
 }
 
+interface Author {
+	_id: string;
+	username: string;
+}
+
+export interface Post {
+	title: string;
+	content?: string;
+	image: boolean;
+	likes: string[];
+	comments: {
+		author: Author;
+		content: string;
+	}[];
+	author: Author;
+	createdAt: string;
+}
+
 export interface ChatMessage {
 	id: string;
-	author: {
-		_id: string;
-		username: string;
-	};
+	author: Author;
 	content: string;
 }
 

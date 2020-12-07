@@ -10,7 +10,9 @@ interface Props {
 
 const Posts: React.FC<Props> = ({ user }) => {
 	const { clientWidth } = document.body;
+
 	const [chat, setChat] = useState(clientWidth > 800);
+	const [posts, setPosts] = useState(null);
 
 	return (
 		<div
