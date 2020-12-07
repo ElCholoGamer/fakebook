@@ -55,16 +55,20 @@ const Header: React.FC<Props> = ({ user, fetchUser }) => {
 	return (
 		<>
 			<Navbar id="header" fixed="top" bg="dark" variant="dark" expand="sm">
-				<Navbar.Brand href="/">Fakebook</Navbar.Brand>
+				<Navbar.Brand as={Link} to="/">
+					Fakebook
+				</Navbar.Brand>
 				<Navbar.Toggle />
 				<Navbar.Collapse className="justify-content-between">
 					<Nav>
 						<NavItem>
-							<NavLink href="/posts">Posts</NavLink>
+							<NavLink as={Link} to="/posts">
+								Posts
+							</NavLink>
 						</NavItem>
 						{user?.verified && (
 							<NavItem>
-								<NavLink href="/posts/add">
+								<NavLink as={Link} to="/posts/add">
 									<PencilFill />
 								</NavLink>
 							</NavItem>
