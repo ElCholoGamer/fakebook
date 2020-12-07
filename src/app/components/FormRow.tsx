@@ -30,42 +30,31 @@ const FormRow = <T extends Record<string, any>>({
 	transformer = str => str,
 	rows,
 }: Props<T>) => {
+	const props = {
+		autoFocus,
+		value: data[value],
+		name: 'email',
+		disabled,
+		onChange: ({ target }: React.ChangeEvent<HTMLInputElement>) =>
+			setData(prev => ({
+				...prev,
+				[value]:
+					target.type === 'checkbox'
+						? target.checked
+						: transformer(target.value),
+			})),
+
+		type,
+		placeholder,
+	};
 	return (
 		<Form.Group as={Row}>
 			<Form.Label column>{label}</Form.Label>
 			<Col sm={10}>
 				{type !== 'textarea' ? (
-					<Form.Control
-						autoFocus={autoFocus}
-						value={data[value]}
-						name="email"
-						disabled={disabled}
-						onChange={e =>
-							setData(prev => ({
-								...prev,
-								[value]: transformer(e.target.value),
-							}))
-						}
-						type={type}
-						placeholder={placeholder}
-					/>
+					<Form.Control {...props} />
 				) : (
-					<Form.Control
-						as="textarea"
-						rows={rows}
-						autoFocus={autoFocus}
-						value={data[value]}
-						name="email"
-						disabled={disabled}
-						onChange={e =>
-							setData(prev => ({
-								...prev,
-								[value]: transformer(e.target.value),
-							}))
-						}
-						type={type}
-						placeholder={placeholder}
-					/>
+					<Form.Control as="textarea" rows={rows} {...props} />
 				)}
 				{footer && <Form.Text className="text-muted">{footer}</Form.Text>}
 			</Col>

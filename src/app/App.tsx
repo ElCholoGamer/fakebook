@@ -49,7 +49,7 @@ const App: React.FC = () => {
 					children={<Register fetchUser={fetchUser} />}
 				/>
 				<Route exact path="/posts" children={<Posts user={user} />} />
-				<Route exact path="/posts/add" component={AddPost} />
+				<Route exact path="/posts/add" children={<AddPost user={user} />} />
 				<Route exact path="/account" children={<Account user={user} />} />
 				<Route
 					exact
