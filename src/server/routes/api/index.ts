@@ -1,6 +1,6 @@
 import express from 'express';
 import asyncHandler from '../../util/async-handler';
-import postsRouter from './post';
+import postsRouter from './posts';
 import userRouter from './user';
 import avatarRouter from './avatar';
 
