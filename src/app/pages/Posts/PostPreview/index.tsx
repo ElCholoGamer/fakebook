@@ -40,10 +40,10 @@ const PostPreview: React.FC<Props> = ({
 	return (
 		<div
 			onClick={() => history.push(`${match.path}/${_id}`)}
-			className="post px-3">
+			className="post-preview px-3">
 			<div className="d-flex align-items-center my-2">
 				<img
-					className="post-avatar rounded-circle mr-2"
+					className="post-preview-avatar rounded-circle mr-2"
 					src={`/api/avatar/${author._id}`}
 				/>
 				{author.username}
@@ -52,7 +52,7 @@ const PostPreview: React.FC<Props> = ({
 			{content && <p>{content}</p>}
 			{image && (
 				<img
-					className="post-image rounded mb-3 border border-secondary"
+					className="post-preview-image rounded mb-3 border border-secondary"
 					src={`/api/posts/${_id}/image`}
 				/>
 			)}

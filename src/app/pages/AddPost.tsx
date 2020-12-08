@@ -12,7 +12,7 @@ interface Props {
 	user: User | null;
 }
 
-const Post: React.FC<Props> = ({ user }) => {
+const AddPost: React.FC<Props> = ({ user }) => {
 	const history = useHistory();
 	const inputRef = useRef<HTMLInputElement>(null);
 	const [input, setInput] = useState({ title: '', content: '' });
@@ -86,4 +86,4 @@ const Post: React.FC<Props> = ({ user }) => {
 	);
 };
 
-export default Post;
+export default AddPost;

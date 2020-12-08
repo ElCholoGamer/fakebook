@@ -68,7 +68,7 @@ const Header: React.FC<Props> = ({ user, fetchUser }) => {
 						</NavItem>
 						{user?.verified && (
 							<NavItem>
-								<NavLink as={Link} to="/posts/add">
+								<NavLink as={Link} to="/addpost">
 									<PencilFill />
 								</NavLink>
 							</NavItem>
