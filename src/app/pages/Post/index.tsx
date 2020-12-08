@@ -2,7 +2,7 @@ import axios, { AxiosError } from 'axios';
 import React, { useEffect, useState } from 'react';
 import { HeartFill, Heart } from 'react-bootstrap-icons';
 import Button from 'react-bootstrap/Button';
-import { useHistory, useParams } from 'react-router-dom';
+import { Link, useHistory, useParams } from 'react-router-dom';
 import Loading from '../../components/Loading';
 import { Post as IPost, User } from '../../utils';
 import './Post.scss';
@@ -93,9 +93,9 @@ const Post: React.FC<Props> = ({ user }) => {
 					/>
 					<span>
 						By{' '}
-						<a className="text-dark" href={`/user/${author._id}`}>
+						<Link className="text-dark" to={`/user/${author._id}`}>
 							{author.username}
-						</a>
+						</Link>
 						{'  '}| {d.getDate()}-{d.getMonth() + 1}-{d.getFullYear()}
 					</span>
 				</div>
