@@ -75,6 +75,11 @@ router.delete(
 				});
 			}
 
+			if (post!.image) {
+				const image = await PostImage.findById(post!._id);
+				await image?.deleteOne();
+			}
+
 			await post!.deleteOne();
 			res.json({
 				status: 200,
