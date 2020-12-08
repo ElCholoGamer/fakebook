@@ -1,8 +1,11 @@
 #posts-page-wrapper {
 	height: 89.7vh;
+	flex-direction: row;
+	justify-content: stretch;
 }
 
 #posts-wrapper {
+	width: 100vw;
 	overflow-y: scroll;
 }
 

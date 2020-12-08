@@ -12,7 +12,7 @@ const Register = lazy(() => import('./pages/Register'));
 const Posts = lazy(() => import('./pages/Posts'));
 const Account = lazy(() => import('./pages/Account'));
 const EditAccount = lazy(() => import('./pages/Account/EditAccount'));
-const AddPost = lazy(() => import('./pages/Posts/AddPost'));
+const AddPost = lazy(() => import('./pages/AddPost'));
 const VerifySuccess = lazy(() => import('./pages/VerifySuccess'));
 
 const App: React.FC = () => {

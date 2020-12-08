@@ -1,7 +1,10 @@
-import React, { useState } from 'react';
+import axios from 'axios';
+import React, { Fragment, useEffect, useState } from 'react';
 import Button from 'react-bootstrap/Button';
-import { User } from '../../utils';
+import Loading from '../../components/Loading';
+import { Post as IPost, User } from '../../utils';
 import ChatBox from './ChatBox';
+import PostPreview from './PostPreview';
 import './Posts.css';
 
 interface Props {
@@ -12,22 +15,43 @@ const Posts: React.FC<Props> = ({ user }) => {
 	const { clientWidth } = document.body;
 
 	const [chat, setChat] = useState(clientWidth > 800);
-	const [posts, setPosts] = useState(null);
+	const [posts, setPosts] = useState<IPost[] | null>(null);
+
+	const fetchPosts = () =>
+		axios.get('/api/posts').then(res => setPosts(res.data.posts));
+
+	useEffect(() => {
+		let mounted = true;
+		fetchPosts().catch(err => {
+			console.error(err);
+			if (mounted) setTimeout(fetchPosts, 3000);
+		});
+
+		return () => {
+			mounted = false;
+		};
+	}, []);
 
 	return (
-		<div
-			id="posts-page-wrapper"
-			className="d-flex flex-row justify-content-stretch">
+		<div id="posts-page-wrapper" className="d-flex">
 			{(clientWidth > 500 || !chat) && (
 				<div id="posts-wrapper" className="p-3">
 					<h1>Latest posts</h1>
 					<hr />
 
 					<div id="posts-content" style={{ height: 1000 }}>
-						Lorem ipsum dolor sit, amet consectetur adipisicing elit. Quos
-						inventore laborum nam distinctio quae nobis nulla asperiores maxime
-						suscipit pariatur, voluptatem, iusto quam, dolor alias accusamus
-						temporibus! Assumenda, nam maxime.
+						{!posts ? (
+							<Loading />
+						) : !posts.length ? (
+							<p className="font-italic">Oh crap there are no posts yet</p>
+						) : (
+							posts.map(post => (
+								<Fragment key={post._id}>
+									<PostPreview user={user} data={post} />
+									<hr />
+								</Fragment>
+							))
+						)}
 					</div>
 				</div>
 			)}
