@@ -5,6 +5,7 @@ import { useHistory, useRouteMatch } from 'react-router-dom';
 import { Post as PostPreview, User } from '../../../utils';
 import './PostPreview.scss';
 import axios from 'axios';
+import { Heart, HeartFill } from 'react-bootstrap-icons';
 
 interface Props {
 	user: User | null;
@@ -12,7 +13,7 @@ interface Props {
 }
 
 const PostPreview: React.FC<Props> = ({
-	data: { title, content, _id, image, author },
+	data: { title, content, _id, image, author, likes },
 	user,
 }) => {
 	const [deleted, setDeleted] = useState(false);
@@ -51,10 +52,20 @@ const PostPreview: React.FC<Props> = ({
 			{content && <p>{content}</p>}
 			{image && (
 				<img
-					className="post-image rounded my-3 border border-secondary"
+					className="post-image rounded mb-3 border border-secondary"
 					src={`/api/posts/${_id}/image`}
 				/>
 			)}
+
+			<p>
+				{likes.includes(user?._id || '') ? (
+					<HeartFill className="mr-2" />
+				) : (
+					<Heart className="mr-2" />
+				)}
+				{likes.length}
+			</p>
+
 			{user?._id === author._id && (
 				<>
 					<br />
