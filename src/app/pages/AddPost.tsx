@@ -53,6 +53,7 @@ const AddPost: React.FC<Props> = ({ user }) => {
 					value="title"
 					label="Post title"
 					autoFocus
+					transformer={s => s.trimStart()}
 					placeholder="An interesting title (bruh)"
 				/>
 
@@ -63,6 +64,7 @@ const AddPost: React.FC<Props> = ({ user }) => {
 					label="Post content (optional)"
 					type="textarea"
 					rows={5}
+					transformer={s => s.trimStart()}
 					placeholder="You better write something decent"
 				/>
 
