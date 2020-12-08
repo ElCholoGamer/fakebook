@@ -4,7 +4,7 @@ import Alert from 'react-bootstrap/Alert';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import { Redirect, useHistory } from 'react-router-dom';
-import FormRow from '../components/FormRow';
+import FormRow from '../../components/FormRow';
 
 interface Props {
 	fetchUser(): Promise<void>;

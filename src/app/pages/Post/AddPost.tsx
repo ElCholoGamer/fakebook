@@ -1,8 +1,8 @@
 import React, { useRef, useState } from 'react';
-import { User } from '../utils';
+import { User } from '../../utils';
 import Form from 'react-bootstrap/Form';
 import { Redirect, useHistory } from 'react-router-dom';
-import FormRow from '../components/FormRow';
+import FormRow from '../../components/FormRow';
 import Button from 'react-bootstrap/Button';
 import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
