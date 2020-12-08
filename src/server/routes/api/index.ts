@@ -26,7 +26,7 @@ router.get(
 		req.user!.code = undefined;
 		await req.user!.save();
 
-		res.redirect('/verify-success');
+		res.redirect('/verifysuccess');
 	})
 );
 
