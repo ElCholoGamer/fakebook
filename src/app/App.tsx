@@ -16,6 +16,7 @@ const AddPost = lazy(() => import('./pages/Post/AddPost'));
 const VerifySuccess = lazy(() => import('./pages/VerifySuccess'));
 const Post = lazy(() => import('./pages/Post'));
 const NotFound = lazy(() => import('./pages/NotFound'));
+const User = lazy(() => import('./pages/User'));
 
 const App: React.FC = () => {
 	const [user, setUser] = useState<User | null>(null);
@@ -59,6 +60,7 @@ const App: React.FC = () => {
 					path="/account/edit"
 					children={<EditAccount fetchUser={fetchUser} user={user} />}
 				/>
+				<Route exact path="/user/:id" children={<User user={user} />} />
 				<Route exact path="/verifysuccess" component={VerifySuccess} />
 
 				<NotFound />

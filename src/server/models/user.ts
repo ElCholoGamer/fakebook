@@ -20,7 +20,7 @@ const UserSchema = new Schema({
 	username: { type: String, required: true, trim: true, minlength: 1 },
 	password: { type: String, required: true, minlength: 4 },
 	email: { type: String, required: true, trim: true },
-	bio: String,
+	bio: { type: String, trim: true },
 	avatar: { type: Boolean, required: true, default: false },
 	verified: { type: Boolean, required: true, default: false },
 	code: String,
