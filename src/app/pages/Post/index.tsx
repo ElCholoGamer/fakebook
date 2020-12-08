@@ -1,6 +1,7 @@
 import axios, { AxiosError } from 'axios';
 import React, { useEffect, useState } from 'react';
 import { HeartFill, Heart } from 'react-bootstrap-icons';
+import Button from 'react-bootstrap/Button';
 import { useHistory, useParams } from 'react-router-dom';
 import Loading from '../../components/Loading';
 import { Post as IPost, User } from '../../utils';
@@ -39,7 +40,7 @@ const Post: React.FC<Props> = ({ user }) => {
 
 	if (!post) return <Loading />;
 
-	const handleClick = () => {
+	const likePost = () => {
 		if (!post || liking) return;
 		if (!user) return alert('Log in to like posts (bruh)');
 
@@ -51,12 +52,25 @@ const Post: React.FC<Props> = ({ user }) => {
 			.finally(() => setLiking(false));
 	};
 
+	const deletePost = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+		e.stopPropagation();
+		e.currentTarget.disabled = true;
+
+		axios
+			.delete(`/api/posts/${id}`)
+			.then(() => history.push('/posts'))
+			.catch(err => {
+				e.currentTarget.disabled = false;
+				console.error(err);
+			});
+	};
+
 	const { title, image, content, likes, author, createdAt } = post;
 	const d = new Date(createdAt);
 
 	const iconProps = {
 		className: `mr-2${liking || !user ? '' : ' free'}`,
-		onClick: handleClick,
+		onClick: likePost,
 	};
 
 	return (
@@ -94,6 +108,13 @@ const Post: React.FC<Props> = ({ user }) => {
 					)}
 					{likes.length}
 				</div>
+
+				<Button
+					className="py-0 px-2 mt-2"
+					onClick={deletePost}
+					variant="outline-danger">
+					Delete Post
+				</Button>
 			</div>
 		</div>
 	);
