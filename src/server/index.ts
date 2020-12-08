@@ -23,7 +23,7 @@ initPassport();
 // Options
 app.enable('trust proxy');
 app.set('json replacer', (key: string, val: any) =>
-	['password', 'code'].includes(key) ? undefined : val
+	['password', 'code', '__v'].includes(key) ? undefined : val
 );
 
 const { TS_NODE_DEV } = process.env;
