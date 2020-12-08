@@ -1,6 +1,6 @@
 import React, { lazy, useState, useEffect, Suspense } from 'react';
 import axios from 'axios';
-import { Redirect, Route, Switch } from 'react-router-dom';
+import { Route, Switch } from 'react-router-dom';
 import Loading from './components/Loading';
 import { User } from './utils';
 
@@ -15,6 +15,7 @@ const EditAccount = lazy(() => import('./pages/Account/EditAccount'));
 const AddPost = lazy(() => import('./pages/AddPost'));
 const VerifySuccess = lazy(() => import('./pages/VerifySuccess'));
 const Post = lazy(() => import('./pages/Post'));
+const NotFound = lazy(() => import('./pages/NotFound'));
 
 const App: React.FC = () => {
 	const [user, setUser] = useState<User | null>(null);
@@ -60,7 +61,7 @@ const App: React.FC = () => {
 				/>
 				<Route exact path="/verifysuccess" component={VerifySuccess} />
 
-				<Redirect to="/" />
+				<NotFound />
 			</Switch>
 			<CookiesFooter />
 		</Suspense>
