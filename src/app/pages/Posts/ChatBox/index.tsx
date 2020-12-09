@@ -70,7 +70,7 @@ const ChatBox: React.FC<Props> = ({ setChat, user }) => {
 			},
 			content: input.trim(),
 		};
-		socket?.send(JSON.stringify(data));
+		socket.send(JSON.stringify(data));
 	};
 
 	return (

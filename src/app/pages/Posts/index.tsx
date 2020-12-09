@@ -17,16 +17,22 @@ const Posts: React.FC<Props> = ({ user }) => {
 	const [chat, setChat] = useState(clientWidth > 800);
 	const [posts, setPosts] = useState<IPost[] | null>(null);
 
-	const fetchPosts = () =>
-		axios.get('/api/posts').then(res => setPosts(res.data.posts));
-
 	useEffect(() => {
 		let mounted = true;
-		fetchPosts().catch(err => {
-			console.error(err);
-			if (mounted) setTimeout(fetchPosts, 3000);
-		});
 
+		const fetchPosts = () => {
+			axios
+				.get('/api/posts')
+				.then(res => {
+					if (mounted) setPosts(res.data.posts);
+				})
+				.catch(err => {
+					console.error(err);
+					if (mounted) setTimeout(fetchPosts, 3000);
+				});
+		};
+
+		fetchPosts();
 		return () => {
 			mounted = false;
 		};

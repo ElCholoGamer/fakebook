@@ -21,18 +21,23 @@ const Post: React.FC<Props> = ({ user }) => {
 	useEffect(() => {
 		let mounted = true;
 
-		const fetchPost = () =>
-			axios.get(`/api/posts/${id}`).then(res => setPost(res.data.post));
+		const fetchPost = () => {
+			axios
+				.get(`/api/posts/${id}`)
+				.then(res => {
+					if (mounted) setPost(res.data.post);
+				})
+				.catch((err: AxiosError) => {
+					if (err.response?.status === 404) {
+						history.push('/posts');
+					} else if (mounted) {
+						console.error(err);
+						setTimeout(fetchPost, 3000);
+					}
+				});
+		};
 
-		fetchPost().catch((err: AxiosError) => {
-			if (err.response?.status === 404) {
-				history.push('/posts');
-			} else if (mounted) {
-				console.error(err);
-				setTimeout(fetchPost, 3000);
-			}
-		});
-
+		fetchPost();
 		return () => {
 			mounted = false;
 		};

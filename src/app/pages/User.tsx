@@ -15,18 +15,24 @@ const User: React.FC<Props> = () => {
 
 	useEffect(() => {
 		let mounted = true;
-		const fetchUser = () =>
-			axios.get(`/api/user/${id}`).then(res => setUser(res.data.user));
 
-		fetchUser().catch((err: AxiosError) => {
-			if (err.response?.status === 404) {
-				history.push('/posts');
-			} else {
-				console.error(err);
-				if (mounted) setTimeout(fetchUser, 3000);
-			}
-		});
+		const fetchUser = () => {
+			axios
+				.get(`/api/user/${id}`)
+				.then(res => {
+					if (mounted) setUser(res.data.user);
+				})
+				.catch((err: AxiosError) => {
+					if (err.response?.status === 404) {
+						history.push('/posts');
+					} else {
+						console.error(err);
+						if (mounted) setTimeout(fetchUser, 3000);
+					}
+				});
+		};
 
+		fetchUser();
 		return () => {
 			mounted = false;
 		};
