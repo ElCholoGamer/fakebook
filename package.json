@@ -17,7 +17,7 @@
 		"lint": "eslint . --ext .ts,.tsx"
 	},
 	"dependencies": {
-		"axios": "^0.21.0",
+		"axios": "^0.21.1",
 		"bcrypt": "^5.0.0",
 		"bootstrap": "^4.5.3",
 		"connect-mongo": "^3.2.0",
