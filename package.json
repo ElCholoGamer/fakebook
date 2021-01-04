@@ -33,7 +33,7 @@
 		"passport-local": "^1.0.0",
 		"react": "^17.0.1",
 		"react-bootstrap": "^1.4.0",
-		"react-bootstrap-icons": "^1.2.2",
+		"react-bootstrap-icons": "^1.2.3",
 		"react-dom": "^17.0.1",
 		"react-router-dom": "^5.2.0",
 		"remarkable": "^2.0.1",
